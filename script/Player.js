@@ -5,9 +5,8 @@ var sensitivity = 1.6;
 Player = function (game) {
 
     camera = createCamera(game.scene, game.canvas);
-    scene.getEngine().isPointerLock = true;
     
-    //initPointerLock(game.scene, game.canvas);
+    initPointerLock(game.scene, game.canvas);
    
 }
 
@@ -74,7 +73,7 @@ function initPointerLock(scene, canvas) {
             || document.webkitPointerLockElement || document.msPointerLockElement || false;
         
         // If the user is already locked
-        if (controlEnabled) {
+        if (!controlEnabled) {
             camera.detachControl(canvas);
             isLocked = false;
         } else {
