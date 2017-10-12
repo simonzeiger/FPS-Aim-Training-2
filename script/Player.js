@@ -1,17 +1,19 @@
 var camera;
 var sensMultip = 0.022;
 var sensitivity = 1.6;
+var scene;
+var canvas;
 
 Player = function (game) {
+    scene = game.scene;
+    canvas = game.canvas;
+    camera = createCamera();
+    handleMouse(game);
 
-    camera = createCamera(game.scene, game.canvas);
-    
-    initPointerLock(game.scene, game.canvas);
-   
 }
 
 //camera work will go here
-function createCamera(scene, canvas) {
+function createCamera() {
 
     // Need a free camera for collisions
     var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 4, -10), scene);
@@ -45,7 +47,7 @@ function createCamera(scene, canvas) {
     return camera;
 }
 
-function initPointerLock(scene, canvas) {
+function handleMouse(game) {
 
     var isLocked = false;
 
@@ -64,14 +66,21 @@ function initPointerLock(scene, canvas) {
         //evt === 0 (left mouse click)
         //evt === 1 (mouse wheel click (not scrolling))
         //evt === 2 (right mouse click)
+
+        var pickResult = scene.pick(scene.getEngine().getRenderWidth() / 2, scene.getEngine().getRenderHeight() / 2);
+        console.log(pickResult.pickedMesh.name);
+        if(pickResult.pickedMesh.name == "target"){
+            game.targetManager.destroy();
+        } 
+        
     };
 
     // Event listener when the pointerlock is updated (or removed by pressing ESC for example).
     var pointerlockchange = function (event) {
 
-        var controlEnabled = document.pointerLockElement || document.mozPointerLockElement 
+        var controlEnabled = document.pointerLockElement || document.mozPointerLockElement
             || document.webkitPointerLockElement || document.msPointerLockElement || false;
-        
+
         // If the user is already locked
         if (!controlEnabled) {
             camera.detachControl(canvas);

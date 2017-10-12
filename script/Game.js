@@ -14,6 +14,7 @@ Game = function(){
     
     var world = new World(this);
     var player = new Player(this);
+    this.targetManager = new TargetManager(this);
 
     engine.runRenderLoop(function() {
         scene.render();

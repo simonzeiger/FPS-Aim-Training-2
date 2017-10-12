@@ -35,6 +35,14 @@ World = function (game) {
     
     var wall3 = createWall("wall3", [-SIZE, SIZE / 2, 0], [0, - Math.PI / 2,0]);
     shadowGenerator.getShadowMap().renderList.push(wall3);
+
+    var target = BABYLON.Mesh.CreateDisc("target", 0.75, 25, scene);
+    target.material = new BABYLON.StandardMaterial("textureyo", scene);
+    target.material.diffuseColor = new BABYLON.Color3(0, 1, 0);
+    target.position = new BABYLON.Vector3(SIZE/2, 5, SIZE - .5);
+    target.material.backFaceCulling = false;
+    target.visibility = 1;
+    target.isPickable = true;
     
 }
 
