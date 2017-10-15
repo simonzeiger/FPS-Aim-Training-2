@@ -4,7 +4,7 @@ Player = function (game) {
     var isJumping = false;
     scene = game.scene;
     canvas = game.canvas;
-    var jumpTimer = new Timer(300, scene, stopJumping);
+    //var jumpTimer = new Timer(300, scene, stopJumping);
     
 
     (function createCamera() {
@@ -37,10 +37,9 @@ Player = function (game) {
         // Enable Collisions
         scene.collisionsEnabled = true;
 
-        return camera;
     })();
 
-   /* fucking around with jump code 
+   /* fucking around with jump code (timer based lmao)
    window.addEventListener("keypress", onKeyUp, false); function onKeyUp(event) {
         switch (event.keyCode) {
             case 32:
@@ -109,7 +108,7 @@ Player = function (game) {
             camera.position.y += (.0005 * scene.getEngine().getDeltaTime()) * jumpTimer.currentTime;
             camera.inertia = .9;
         }
-    });*.
+    });*/
 }
 
 

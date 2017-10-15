@@ -8,9 +8,13 @@ TargetManager = function (game) {
     var MAX_GOOD_Y = 11.5;
     var MIN_GOOD_Y = 1.5;
 
+    var maxTargets = 10;
+    var delay = .5;
+    var tarDuration = .75;
+
     scene = game.scene;
     target = scene.getMeshByName("target");
-    targetDurTimer = new Timer(750, scene, moveTarget);
+    targetDurTimer = new Timer(tarDuration * 1000, scene, moveTarget);
 
     this.disableTarget = function () {
         game.targetsHit++;
@@ -27,6 +31,7 @@ TargetManager = function (game) {
 
     function moveTarget() {
         game.totalTargets++;
+       
 
         scene.getMeshByName("mt").material.diffuseTexture.getContext().clearRect(0, 0, 1024, 1024);
         scene.getMeshByName("mt").material.diffuseTexture.drawText(scoreString(game.totalTargets - game.targetsHit) + ".... shots failed",
@@ -34,8 +39,12 @@ TargetManager = function (game) {
 
         target.visibility = 0;
         target.position = getNextPosition();
-        var delayTimer = new Timer(500, scene, startTarget);
-        delayTimer.start();
+
+        if(game.totalTargets < maxTargets){
+            var delayTimer = new Timer(delay * 1000, scene, startTarget);
+            delayTimer.start();
+        }
+       
     }
 
     function startTarget() {

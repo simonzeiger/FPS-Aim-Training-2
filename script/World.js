@@ -18,12 +18,12 @@ World = function (game) {
     scene.clearColor = new BABYLON.Color3(0.192, .302, .475);
 
     // Our built-in 'ground' shape. Params: name, width, depth, subdivs, scene
-    var ground = BABYLON.Mesh.CreateGround("ground1", SIZE * 2, SIZE * 2, 1, scene);
-    ground.material = new BABYLON.StandardMaterial("groundMat", scene);
-    ground.material.diffuseColor = new BABYLON.Color3(.5, .5, .5);
-    ground.material.backFaceCulling = false;
-    ground.receiveShadows = true;
-    ground.checkCollisions = true;
+    var ground1 = BABYLON.Mesh.CreateGround("ground1", SIZE * 2, SIZE * 2, 1, scene);
+    ground1.material = new BABYLON.StandardMaterial("groundMat", scene);
+    ground1.material.diffuseColor = new BABYLON.Color3(.5, .5, .5);
+    ground1.material.backFaceCulling = false;
+    ground1.receiveShadows = true;
+    ground1.checkCollisions = true;
 
     var wall1 = createWall("wall1", [0, SIZE / 2, SIZE], [0, 0, 0]);
     //make wall1 cast a shadow
@@ -35,6 +35,22 @@ World = function (game) {
 
     var wall3 = createWall("wall3", [-SIZE, SIZE / 2, 0], [0, - Math.PI / 2, 0]);
     shadowGenerator.getShadowMap().renderList.push(wall3);
+
+    var ground2 = BABYLON.Mesh.CreateGround("ground1", SIZE * 2, SIZE * 1.5, 1, scene);
+    ground2.position.y = 2;
+    ground2.position.z = -SIZE * 1.75;
+    ground2.material = ground1.material;
+    ground2.receiveShadows = true;
+    ground2.checkCollisions = true;
+
+    var littleWall2 = BABYLON.MeshBuilder.CreatePlane("lw1", { height: 4.4, width: SIZE * 2 }, scene);
+    littleWall2.material = new BABYLON.StandardMaterial("lwallMat", scene);
+    littleWall2.material.diffuseColor = new BABYLON.Color3(.75, .75, .75);
+    littleWall2.material.backFaceCulling = false;
+    littleWall2.position.z = -SIZE;    
+    littleWall2.position.y = 2.2;
+    littleWall2.receiveShadows = true;
+    littleWall2.checkCollisions = true;
 
     function createWall(id, position, rotation) {
         var wall = BABYLON.MeshBuilder.CreatePlane(id, { height: SIZE - (SIZE * .05), width: SIZE * 2 }, scene);
