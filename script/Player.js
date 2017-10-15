@@ -1,9 +1,11 @@
 Player = function (game) {
     var sensMultip = 0.022;
     var camera;
-
+    var isJumping = false;
     scene = game.scene;
     canvas = game.canvas;
+    var jumpTimer = new Timer(300, scene, stopJumping);
+    
 
     (function createCamera() {
         // Need a free camera for collisions
@@ -24,7 +26,7 @@ Player = function (game) {
         camera.keysLeft = [65]; // A
         camera.keysDown = [83]; // S
         camera.keysRight = [68]; // D
-        camera._needMoveForGravity = true;  
+        camera._needMoveForGravity = true;
 
         camera.inertia = .75;
         camera.fov = 1.29154;
@@ -38,6 +40,15 @@ Player = function (game) {
         return camera;
     })();
 
+   /* fucking around with jump code 
+   window.addEventListener("keypress", onKeyUp, false); function onKeyUp(event) {
+        switch (event.keyCode) {
+            case 32:
+                isJumping = true;
+                jumpTimer.start();
+                break;
+        }
+    }*/
 
     (function handleMouse() {
 
@@ -55,7 +66,9 @@ Player = function (game) {
             }
 
             var pickResult = scene.pick(scene.getEngine().getRenderWidth() / 2, scene.getEngine().getRenderHeight() / 2);
-            
+
+           
+
             if (pickResult.pickedMesh != null && pickResult.pickedMesh.name == "target" && pickResult.pickedMesh.visibility != 0) {
                 game.targetManager.disableTarget();
             }
@@ -85,6 +98,18 @@ Player = function (game) {
         document.addEventListener("webkitpointerlockchange", pointerlockchange, false);
     })();
 
+    /*function stopJumping(){
+        isJumping = false;
+        jumpTimer.reset();
+        camera.inertia = .75;
+    }
+
+   /* scene.registerBeforeRender( function (){
+        if(isJumping){
+            camera.position.y += (.0005 * scene.getEngine().getDeltaTime()) * jumpTimer.currentTime;
+            camera.inertia = .9;
+        }
+    });*.
 }
 
 

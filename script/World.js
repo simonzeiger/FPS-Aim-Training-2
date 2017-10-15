@@ -36,26 +36,6 @@ World = function (game) {
     var wall3 = createWall("wall3", [-SIZE, SIZE / 2, 0], [0, - Math.PI / 2, 0]);
     shadowGenerator.getShadowMap().renderList.push(wall3);
 
-    var target = BABYLON.Mesh.CreateDisc("target", 0.75, 25, scene);
-    target.material = new BABYLON.StandardMaterial("textureyo", scene);
-    target.material.diffuseColor = new BABYLON.Color3(0, 1, 0);
-    target.position = new BABYLON.Vector3(0, 6, SIZE - .1);
-    target.material.backFaceCulling = false;
-    target.visibility = 1;
-    target.isPickable = true;
-
-
-
-    var circleThing = BABYLON.MeshBuilder.CreatePlane("circleThing", 6, scene);
-    circleThing.material = new BABYLON.StandardMaterial("circleThingTexture", scene);
-    circleThing.material.diffuseTexture = new BABYLON.Texture("assets/circlething.png", scene);
-    circleThing.material.diffuseTexture.hasAlpha = true;
-    circleThing.material.backFaceCulling = false;
-    circleThing.scaling.x = 2.25;
-    circleThing.scaling.y = 2.25;
-    circleThing.position = new BABYLON.Vector3(0, SIZE / 2.5, SIZE - .1);
-
-
     function createWall(id, position, rotation) {
         var wall = BABYLON.MeshBuilder.CreatePlane(id, { height: SIZE - (SIZE * .05), width: SIZE * 2 }, scene);
         wall.material = new BABYLON.StandardMaterial("wallMat", scene);
@@ -67,6 +47,59 @@ World = function (game) {
         return wall;
 
     }
+
+    var scoreBoard =  BABYLON.MeshBuilder.CreatePlane("sb", {height: 9, width: 18}, scene);
+    scoreBoard.material = new BABYLON.StandardMaterial("sbMat", scene);
+    scoreBoard.material.diffuseColor = new BABYLON.Color3(0, 0, 0);
+    
+    scoreBoard.material.backFaceCulling = false;
+    scoreBoard.position = new BABYLON.Vector3(0, 18.5, SIZE);
+    
+    
+
+    var target = BABYLON.Mesh.CreateDisc("target", 0.75, 25, scene);
+    target.material = new BABYLON.StandardMaterial("textureyo", scene);
+    target.material.diffuseColor = new BABYLON.Color3(0, 1, 0);
+    target.position = new BABYLON.Vector3(0, 6, SIZE - .1);
+    target.material.backFaceCulling = false;
+    target.visibility = 1;
+    target.isPickable = true;
+
+    var circleThing = BABYLON.MeshBuilder.CreatePlane("circleThing", 6, scene);
+    circleThing.material = new BABYLON.StandardMaterial("circleThingTexture", scene);
+    circleThing.material.diffuseTexture = new BABYLON.Texture("assets/circlething.png", scene);
+    circleThing.material.diffuseTexture.hasAlpha = true;
+    circleThing.material.backFaceCulling = false;
+    circleThing.scaling.x = 2.25;
+    circleThing.scaling.y = 2.25;
+    circleThing.position = new BABYLON.Vector3(0, SIZE / 2.5, SIZE - .1);
+
+    var hitsText = BABYLON.MeshBuilder.CreatePlane("ht", {width: 8, height: 8}, scene);
+    hitsText.material = new BABYLON.StandardMaterial("htt", scene);
+    hitsText.position = new BABYLON.Vector3(0, 20,  SIZE - .1);
+    
+    hitsText.material.diffuseTexture = new BABYLON.DynamicTexture("dynamic texture", 1024, scene, true);
+    hitsText.material.diffuseTexture.drawText("000", 100, 800, "500px arial", "white", "transparent");  
+    hitsText.material.diffuseTexture.hasAlpha = true;
+    hitsText.material.specularColor = new BABYLON.Color3(0, 0, 0);
+    hitsText.material.emissiveColor = new BABYLON.Color3(1, 1, 1);
+    hitsText.material.backFaceCulling = false;
+
+    var missesText = BABYLON.MeshBuilder.CreatePlane("mt", {width: 10, height: 10}, scene);
+    missesText.material = new BABYLON.StandardMaterial("mtt", scene);
+    missesText.position = new BABYLON.Vector3(0, 14.5,  SIZE - .1);
+
+    missesText.material.diffuseTexture = new BABYLON.DynamicTexture("dynamic texture", 1024, scene, true);
+    missesText.material.diffuseTexture.drawText("000.... shots failed", 110, 350, "100px arial", "white", "transparent");
+    missesText.material.diffuseTexture.hasAlpha = true;
+    missesText.material.specularColor = new BABYLON.Color3(0, 0, 0);
+    missesText.material.emissiveColor = new BABYLON.Color3(1, 1, 1);
+    missesText.material.backFaceCulling = false;
+
+  
+
+
+   
 
 }
 

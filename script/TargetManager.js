@@ -14,6 +14,9 @@ TargetManager = function (game) {
 
     this.disableTarget = function () {
         game.targetsHit++;
+        scene.getMeshByName("ht").material.diffuseTexture.getContext().clearRect(0, 0, 1024, 1024);
+        scene.getMeshByName("ht").material.diffuseTexture.drawText(scoreString(game.targetsHit), 100, 800, "500px arial", "white", "transparent");
+
         targetDurTimer.reset();
         target.material.diffuseColor = new BABYLON.Color3(0, 0, 0);
 
@@ -23,7 +26,12 @@ TargetManager = function (game) {
     }
 
     function moveTarget() {
-        game.totalTargets ++;
+        game.totalTargets++;
+
+        scene.getMeshByName("mt").material.diffuseTexture.getContext().clearRect(0, 0, 1024, 1024);
+        scene.getMeshByName("mt").material.diffuseTexture.drawText(scoreString(game.totalTargets - game.targetsHit) + ".... shots failed",
+            110, 350, "100px arial", "white", "transparent");
+
         target.visibility = 0;
         target.position = getNextPosition();
         var delayTimer = new Timer(500, scene, startTarget);
@@ -31,7 +39,6 @@ TargetManager = function (game) {
     }
 
     function startTarget() {
-        console.log("targets hit: ", game.targetsHit, "total targets: ", game.totalTargets)
         targetDurTimer.reset()
         target.material.diffuseColor = new BABYLON.Color3(0, 1, 0);
         target.visibility = 1;
@@ -42,11 +49,20 @@ TargetManager = function (game) {
     function getNextPosition() {
         var x = 0;
         var y = 0;
-        while ((x < MAX_BAD_X && x > MIN_BAD_X) ||  (y < MAX_BAD_Y && y > MIN_BAD_Y)) {
-                x = Math.random() * Math.abs(MAX_GOOD_X - MIN_GOOD_X) - MAX_GOOD_X;
-                y = Math.random() *  Math.abs(MAX_GOOD_Y - MIN_GOOD_Y) + MIN_GOOD_Y;
+        while ((x < MAX_BAD_X && x > MIN_BAD_X) || (y < MAX_BAD_Y && y > MIN_BAD_Y)) {
+            x = Math.random() * Math.abs(MAX_GOOD_X - MIN_GOOD_X) - MAX_GOOD_X;
+            y = Math.random() * Math.abs(MAX_GOOD_Y - MIN_GOOD_Y) + MIN_GOOD_Y;
         }
-        return new BABYLON.Vector3(x , y, target.position.z);
+        return new BABYLON.Vector3(x, y, target.position.z);
+    }
+
+    function scoreString(count) {
+        if (count >= 0 && count < 10)
+            return "00" + count;
+        else if (count >= 10 && count < 100)
+            return "0" + count;
+        else
+            return count + "";
     }
 
 }
