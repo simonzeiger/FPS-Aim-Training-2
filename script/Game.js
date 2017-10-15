@@ -16,6 +16,9 @@ Game = function(){
     var player = new Player(this);
     this.targetManager = new TargetManager(this);
 
+    this.scene.registerBeforeRender(function () {
+    });
+    
     engine.runRenderLoop(function() {
         scene.render();
     });

@@ -39,22 +39,26 @@ World = function (game) {
     var target = BABYLON.Mesh.CreateDisc("target", 0.75, 25, scene);
     target.material = new BABYLON.StandardMaterial("textureyo", scene);
     target.material.diffuseColor = new BABYLON.Color3(0, 1, 0);
-    target.position = new BABYLON.Vector3(SIZE/2, 5, SIZE - .5);
+    target.position = new BABYLON.Vector3(SIZE/2, 5, SIZE - .1);
     target.material.backFaceCulling = false;
     target.visibility = 1;
     target.isPickable = true;
+
+    function createWall(id, position, rotation) {
+        var wall = BABYLON.MeshBuilder.CreatePlane(id, {height: SIZE, width: SIZE * 2}, scene);
+        wall.material = new BABYLON.StandardMaterial("wallMat", scene);
+        wall.material.diffuseColor = new BABYLON.Color3(.5, .5, .5);
+        wall.material.backFaceCulling = false;
+        wall.position = new BABYLON.Vector3(position[0], position[1], position[2]);
+        wall.rotation = new BABYLON.Vector3(rotation[0], rotation[1], rotation[2]);
+        wall.checkCollisions = true;
+        return wall;
+      
+      }
+
+
     
 }
 
-function createWall(id, position, rotation) {
-    var wall = BABYLON.MeshBuilder.CreatePlane(id, {height: SIZE, width: SIZE * 2}, scene);
-    wall.material = new BABYLON.StandardMaterial("wallMat", scene);
-    wall.material.diffuseColor = new BABYLON.Color3(.5, .5, .5);
-    wall.material.backFaceCulling = false;
-    wall.position = new BABYLON.Vector3(position[0], position[1], position[2]);
-    wall.rotation = new BABYLON.Vector3(rotation[0], rotation[1], rotation[2]);
-    wall.checkCollisions = true;
-    return wall;
-  
-  }
+
 
