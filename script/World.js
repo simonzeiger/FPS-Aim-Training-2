@@ -1,9 +1,10 @@
-var scene;
-var SIZE = 15;
+
 World = function (game) {
+    
+    var SIZE = 15;
 
     //set the global variable for ease of use
-    scene = game.scene;
+    var scene = game.scene;
 
     var dirLight = new BABYLON.DirectionalLight("Dir0", new BABYLON.Vector3(2, -6, -4.75), scene);
     dirLight.position = new BABYLON.Vector3(0, 40, 0);
@@ -56,8 +57,6 @@ World = function (game) {
       
       }
 
-
-    
 }
 
 

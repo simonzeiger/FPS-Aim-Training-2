@@ -1,8 +1,7 @@
-
 Player = function (game) {
     var sensMultip = 0.022;
     var camera;
-    
+
     scene = game.scene;
     canvas = game.canvas;
    
@@ -62,7 +61,7 @@ Player = function (game) {
     
             var pickResult = scene.pick(scene.getEngine().getRenderWidth() / 2, scene.getEngine().getRenderHeight() / 2);
             console.log(pickResult.pickedMesh.name);
-            if(pickResult.pickedMesh.name == "target"){
+            if(pickResult.pickedMesh.name == "target" && pickResult.pickedMesh.visibility != 0 ){
                 game.targetManager.disableTarget();
             } 
             
