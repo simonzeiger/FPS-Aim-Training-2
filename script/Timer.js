@@ -1,4 +1,5 @@
 /**
+ * https://github.com/Temechon/shinobomb/blob/master/js/model/Timer.js
  * Builds a new timer
  * @param time The time in milliseconds
  * @param scene The scene

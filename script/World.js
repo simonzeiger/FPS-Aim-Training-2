@@ -1,6 +1,5 @@
-
 World = function (game) {
-    
+
     var SIZE = 15;
 
     //set the global variable for ease of use
@@ -23,39 +22,51 @@ World = function (game) {
     ground.material = new BABYLON.StandardMaterial("groundMat", scene);
     ground.material.diffuseColor = new BABYLON.Color3(.5, .5, .5);
     ground.material.backFaceCulling = false;
-    ground.receiveShadows = true;    
+    ground.receiveShadows = true;
     ground.checkCollisions = true;
 
-    var wall1 = createWall("wall1", [0, SIZE / 2, SIZE], [0,0,0]);
+    var wall1 = createWall("wall1", [0, SIZE / 2, SIZE], [0, 0, 0]);
     //make wall1 cast a shadow
     shadowGenerator.getShadowMap().renderList.push(wall1);
 
-    var wall2 = createWall("wall2", [SIZE, SIZE / 2, 0], [0, Math.PI / 2,0]);
-    wall2.receiveShadows = true;    
-    
-    
-    var wall3 = createWall("wall3", [-SIZE, SIZE / 2, 0], [0, - Math.PI / 2,0]);
+    var wall2 = createWall("wall2", [SIZE, SIZE / 2, 0], [0, Math.PI / 2, 0]);
+    wall2.receiveShadows = true;
+
+
+    var wall3 = createWall("wall3", [-SIZE, SIZE / 2, 0], [0, - Math.PI / 2, 0]);
     shadowGenerator.getShadowMap().renderList.push(wall3);
 
     var target = BABYLON.Mesh.CreateDisc("target", 0.75, 25, scene);
     target.material = new BABYLON.StandardMaterial("textureyo", scene);
     target.material.diffuseColor = new BABYLON.Color3(0, 1, 0);
-    target.position = new BABYLON.Vector3(SIZE/2, 5, SIZE - .1);
+    target.position = new BABYLON.Vector3(0, 6, SIZE - .1);
     target.material.backFaceCulling = false;
     target.visibility = 1;
     target.isPickable = true;
 
+
+
+    var circleThing = BABYLON.MeshBuilder.CreatePlane("circleThing", 6, scene);
+    circleThing.material = new BABYLON.StandardMaterial("circleThingTexture", scene);
+    circleThing.material.diffuseTexture = new BABYLON.Texture("assets/circlething.png", scene);
+    circleThing.material.diffuseTexture.hasAlpha = true;
+    circleThing.material.backFaceCulling = false;
+    circleThing.scaling.x = 2.25;
+    circleThing.scaling.y = 2.25;
+    circleThing.position = new BABYLON.Vector3(0, SIZE / 2.5, SIZE - .1);
+
+
     function createWall(id, position, rotation) {
-        var wall = BABYLON.MeshBuilder.CreatePlane(id, {height: SIZE, width: SIZE * 2}, scene);
+        var wall = BABYLON.MeshBuilder.CreatePlane(id, { height: SIZE - (SIZE * .05), width: SIZE * 2 }, scene);
         wall.material = new BABYLON.StandardMaterial("wallMat", scene);
         wall.material.diffuseColor = new BABYLON.Color3(.5, .5, .5);
         wall.material.backFaceCulling = false;
-        wall.position = new BABYLON.Vector3(position[0], position[1], position[2]);
-        wall.rotation = new BABYLON.Vector3(rotation[0], rotation[1], rotation[2]);
+        wall.position = new BABYLON.Vector3(position[0], position[1] - (SIZE * .05), position[2]);
+        wall.rotation = new BABYLON.Vector3(rotation[0], rotation[1] , rotation[2]);
         wall.checkCollisions = true;
         return wall;
-      
-      }
+
+    }
 
 }
 
