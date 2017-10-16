@@ -25,13 +25,17 @@ World = function (game) {
     ground1.receiveShadows = true;
     ground1.checkCollisions = true;
 
-    var wall1 = createWall("wall1", [0, SIZE / 2, SIZE], [0, 0, 0]);
+    var wall1 = BABYLON.MeshBuilder.CreatePlane("wall1", { height: SIZE - (SIZE * .05), width: SIZE * 2 }, scene);
+    wall1.material = new BABYLON.StandardMaterial("wallMat", scene);
+    wall1.material.diffuseColor = new BABYLON.Color3(.5, .5, .5);
+    wall1.material.backFaceCulling = false;
+    wall1.position = new BABYLON.Vector3(0, SIZE / 2 - (SIZE * .05), SIZE);
+    wall1.checkCollisions = true;
     //make wall1 cast a shadow
     shadowGenerator.getShadowMap().renderList.push(wall1);
 
     var wall2 = createWall("wall2", [SIZE, SIZE / 2, 0], [0, Math.PI / 2, 0]);
     wall2.receiveShadows = true;
-
 
     var wall3 = createWall("wall3", [-SIZE, SIZE / 2, 0], [0, - Math.PI / 2, 0]);
     shadowGenerator.getShadowMap().renderList.push(wall3);
@@ -43,7 +47,7 @@ World = function (game) {
     ground2.receiveShadows = true;
     ground2.checkCollisions = true;
 
-    var littleWall2 = BABYLON.MeshBuilder.CreatePlane("lw1", { height: 4.4, width: SIZE * 2 }, scene);
+    var littleWall2 = BABYLON.MeshBuilder.CreateBox("lw2", { height: 4.4, width: SIZE * 2, depth: 1}, scene);
     littleWall2.material = new BABYLON.StandardMaterial("lwallMat", scene);
     littleWall2.material.diffuseColor = new BABYLON.Color3(.75, .75, .75);
     littleWall2.material.backFaceCulling = false;
@@ -53,10 +57,8 @@ World = function (game) {
     littleWall2.checkCollisions = true;
 
     function createWall(id, position, rotation) {
-        var wall = BABYLON.MeshBuilder.CreatePlane(id, { height: SIZE - (SIZE * .05), width: SIZE * 2 }, scene);
-        wall.material = new BABYLON.StandardMaterial("wallMat", scene);
-        wall.material.diffuseColor = new BABYLON.Color3(.5, .5, .5);
-        wall.material.backFaceCulling = false;
+        var wall = BABYLON.MeshBuilder.CreatePlane(id, { height: SIZE - (SIZE * .05), width: SIZE * 5 }, scene);
+        wall.material = wall1.material;
         wall.position = new BABYLON.Vector3(position[0], position[1] - (SIZE * .05), position[2]);
         wall.rotation = new BABYLON.Vector3(rotation[0], rotation[1] , rotation[2]);
         wall.checkCollisions = true;
