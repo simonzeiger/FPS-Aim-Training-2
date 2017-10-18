@@ -2,10 +2,10 @@ Player = function (game) {
     var sensMultip = 0.022;
     var camera;
     var isJumping = false;
+    var noclip = false;
     scene = game.scene;
     canvas = game.canvas;
-    //var jumpTimer = new Timer(300, scene, stopJumping);
-    
+
 
     (function createCamera() {
         // Need a free camera for collisions
@@ -17,10 +17,13 @@ Player = function (game) {
         // This attaches the camera to the canvas
         camera.attachControl(canvas, true);
 
-        //Then apply collisions and gravity to the active camera
-        camera.checkCollisions = true;
-        camera.applyGravity = true;
-        scene.gravity = new BABYLON.Vector3(0, -1, 0);
+
+        if (!noclip) {
+            camera.applyGravity = true;
+            //Then apply collisions and gravity to the active camera
+            camera.checkCollisions = true;
+        }
+
         camera.speed = 2;
         camera.keysUp = [87]; // W
         camera.keysLeft = [65]; // A
@@ -32,22 +35,31 @@ Player = function (game) {
         camera.fov = 1.29154;
         camera.angularSensibility = 500;
         camera.ellipsoid = new BABYLON.Vector3(1, 2, 1); //not working properly
-        camera.checkCollisions = true;
 
         // Enable Collisions
         scene.collisionsEnabled = true;
 
     })();
 
-   /* fucking around with jump code (timer based lmao)
-   window.addEventListener("keypress", onKeyUp, false); function onKeyUp(event) {
+
+
+    window.addEventListener('keyup', (event) => {
         switch (event.keyCode) {
-            case 32:
-                isJumping = true;
-                jumpTimer.start();
+            case 78:
+                console.log("noclip");
+                noclip = !noclip;
+                if (noclip) {
+                    camera.applyGravity = false;
+                    //Then apply collisions and gravity to the active camera
+                    camera.checkCollisions = false;
+                } else {
+                    camera.applyGravity = true;
+                    //Then apply collisions and gravity to the active camera
+                    camera.checkCollisions = true;
+                }
                 break;
         }
-    }*/
+    });
 
     (function handleMouse() {
 
@@ -65,11 +77,22 @@ Player = function (game) {
             }
 
             var pickResult = scene.pick(scene.getEngine().getRenderWidth() / 2, scene.getEngine().getRenderHeight() / 2);
+            var pickName = pickResult.pickedMesh.name;
+            if (pickResult.pickedMesh != null) {
 
-           
-
-            if (pickResult.pickedMesh != null && pickResult.pickedMesh.name == "target" && pickResult.pickedMesh.visibility != 0) {
-                game.targetManager.disableTarget();
+                if (pickName == "target" && pickResult.pickedMesh.visibility != 0) {
+                    game.targetManager.disableTarget();
+                } else if(pickName == "p0" || pickName == "p4" || pickName == "p8" || pickName == "p12"){
+                    camera.position = new BABYLON.Vector3(0, 4, -10);
+                } else if(pickName == "p1" || pickName == "p5" || pickName == "p9" || pickName == "p13"){
+                    camera.position = new BABYLON.Vector3(0, 6, -10 - SIZE * 1.25);
+                } else if(pickName == "p2" || pickName == "p6" || pickName == "p10" || pickName == "p14"){
+                    camera.position = new BABYLON.Vector3(0, 8, -10 - 2 * SIZE * 1.25);
+                }  else if(pickName == "p3" || pickName == "p7" || pickName == "p11" || pickName == "p15"){
+                    camera.position = new BABYLON.Vector3(0, 10, -10 - 3 * SIZE * 1.25);
+                } else if(pickName == "st"){
+                   game.world.startStop();
+                }
             }
 
         };
@@ -97,18 +120,6 @@ Player = function (game) {
         document.addEventListener("webkitpointerlockchange", pointerlockchange, false);
     })();
 
-    /*function stopJumping(){
-        isJumping = false;
-        jumpTimer.reset();
-        camera.inertia = .75;
-    }
-
-   /* scene.registerBeforeRender( function (){
-        if(isJumping){
-            camera.position.y += (.0005 * scene.getEngine().getDeltaTime()) * jumpTimer.currentTime;
-            camera.inertia = .9;
-        }
-    });*/
 }
 
 
