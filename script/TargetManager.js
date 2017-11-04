@@ -8,14 +8,15 @@ TargetManager = function (game) {
     const MAX_GOOD_Y = 11.25;
     const MIN_GOOD_Y = 1.75;
 
+    //used in world class
+    this.start = false;
+
     var maxTargets = 25;
     var delay = .5;
     var tarDuration = .75;
 
     var targetsHit = 0;
     var totalTargets = 0;
-
-    var start = false;
 
     var scene = game.scene;
 
@@ -28,7 +29,11 @@ TargetManager = function (game) {
 
     var delayTimer = new Timer(delay * 1000, scene, startTarget);
 
+    var targetSoundEnabled = false;
 
+    var targetDing;
+    if(targetSoundEnabled) targetDing = new BABYLON.Sound("tDing", "assets/ding.wav", scene);
+    
 
     this.disableTarget = function () {
         targetsHit++;
@@ -42,12 +47,12 @@ TargetManager = function (game) {
 
         shotTimer.reset();
         shotTimer.start();
+        if(targetSoundEnabled) targetDing.play();
     }
 
     function moveTarget() {
 
         totalTargets++;
-
 
         scene.getMeshByName("mt").material.diffuseTexture.getContext().clearRect(0, 0, 1024, 1024);
         scene.getMeshByName("mt").material.diffuseTexture.drawText(scoreString(totalTargets - targetsHit),
@@ -60,6 +65,8 @@ TargetManager = function (game) {
             delayTimer.reset();
 
             delayTimer.start();
+        } else {
+            game.world.startStop();
         }
 
     }

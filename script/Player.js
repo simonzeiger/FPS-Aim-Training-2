@@ -1,15 +1,27 @@
 Player = function (game) {
-    var sensMultip = 0.022;
+    const DEF_SENS = 4;
+    const DEF_YAW = 0.022;
+    const DEF_PITCH = 0.022;
+    const DEGREE_RAD_CONV = 57.2958;
+    var invertYRot = false;
+    var invertXRot = false;
+    const CAMERA_INIT_Z = -2;
+
     var camera;
     var isJumping = false;
     var noclip = false;
-    scene = game.scene;
-    canvas = game.canvas;
+    var scene = game.scene;
+    var canvas = game.canvas;
 
+    //"constructor"
+    (function Player() {
+        createCamera();
+        handleMouse();
+    })();
 
-    (function createCamera() {
+    function createCamera() {
         // Need a free camera for collisions
-        camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 4, -10), scene);
+        camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 4, -4), scene);
 
         // This targets the camera to scene origin
         camera.setTarget(BABYLON.Vector3.Zero());
@@ -20,11 +32,10 @@ Player = function (game) {
 
         if (!noclip) {
             camera.applyGravity = true;
-            //Then apply collisions and gravity to the active camera
             camera.checkCollisions = true;
         }
 
-        camera.speed = 2;
+        camera.speed = 1;
         camera.keysUp = [87]; // W
         camera.keysLeft = [65]; // A
         camera.keysDown = [83]; // S
@@ -33,36 +44,35 @@ Player = function (game) {
 
         camera.inertia = .75;
         camera.fov = 1.29154;
-        camera.angularSensibility = 500;
-        camera.ellipsoid = new BABYLON.Vector3(1, 2, 1); //not working properly
+        updateSens(DEF_SENS, DEF_YAW);
+        camera.ellipsoid = new BABYLON.Vector3(1.5, 2, 1.5); 
 
         // Enable Collisions
         scene.collisionsEnabled = true;
 
-    })();
+    }
 
+    function updateSens(sens, yaw) {
 
-
-    window.addEventListener('keyup', (event) => {
-        switch (event.keyCode) {
-            case 78:
-                console.log("noclip");
-                noclip = !noclip;
-                if (noclip) {
-                    camera.applyGravity = false;
-                    //Then apply collisions and gravity to the active camera
-                    camera.checkCollisions = false;
-                } else {
-                    camera.applyGravity = true;
-                    //Then apply collisions and gravity to the active camera
-                    camera.checkCollisions = true;
-                }
-                break;
+        if (!invertXRot) {
+            camera.angularSensibilityX = DEGREE_RAD_CONV / (DEF_PITCH * sens);
+        } else {
+           camera.angularSensibilityX = DEGREE_RAD_CONV / (-DEF_PITCH * sens);
         }
-    });
 
-    (function handleMouse() {
+        if (!invertYRot) {
+            camera.angularSensibilityY = DEGREE_RAD_CONV / (yaw * sens);
+        } else {
+            camera.angularSensibilityY = DEGREE_RAD_CONV / (-yaw * sens);
+        }
+    }
 
+    function handleMouse() {
+        handlePicking();
+        handlePointerLock();
+    }
+
+    function handlePicking() {
         var isLocked = false;
 
         // On click event, request pointer lock
@@ -80,22 +90,26 @@ Player = function (game) {
             var pickName = pickResult.pickedMesh.name;
             if (pickResult.pickedMesh != null) {
 
+
                 if (pickName == "target" && pickResult.pickedMesh.visibility != 0) {
                     game.targetManager.disableTarget();
-                } else if(pickName == "p0" || pickName == "p4" || pickName == "p8" || pickName == "p12"){
-                    camera.position = new BABYLON.Vector3(0, 4, -10);
-                } else if(pickName == "p1" || pickName == "p5" || pickName == "p9" || pickName == "p13"){
-                    camera.position = new BABYLON.Vector3(0, 6, -10 - SIZE * 1.25);
-                } else if(pickName == "p2" || pickName == "p6" || pickName == "p10" || pickName == "p14"){
-                    camera.position = new BABYLON.Vector3(0, 8, -10 - 2 * SIZE * 1.25);
-                }  else if(pickName == "p3" || pickName == "p7" || pickName == "p11" || pickName == "p15"){
-                    camera.position = new BABYLON.Vector3(0, 10, -10 - 3 * SIZE * 1.25);
-                } else if(pickName == "st"){
-                   game.world.startStop();
+                } else if (pickName == "p0" || pickName == "p4" || pickName == "p8" || pickName == "p12") {
+                    camera.position = new BABYLON.Vector3(0, 4, -4);
+                } else if (pickName == "p1" || pickName == "p5" || pickName == "p9" || pickName == "p13") {
+                    camera.position = new BABYLON.Vector3(0, 6, CAMERA_INIT_Z - SIZE * 1.25);
+                } else if (pickName == "p2" || pickName == "p6" || pickName == "p10" || pickName == "p14") {
+                    camera.position = new BABYLON.Vector3(0, 8, CAMERA_INIT_Z - 2 * SIZE * 1.25);
+                } else if (pickName == "p3" || pickName == "p7" || pickName == "p11" || pickName == "p15") {
+                    camera.position = new BABYLON.Vector3(0, 10, CAMERA_INIT_Z - 3 * SIZE * 1.25);
+                } else if (pickName == "st") {
+                    game.world.startStop();
                 }
             }
 
         };
+    }
+
+    function handlePointerLock() {
 
         // Event listener when the pointerlock is updated (or removed by pressing ESC for example).
         var pointerlockchange = function (event) {
@@ -118,9 +132,25 @@ Player = function (game) {
         document.addEventListener("mspointerlockchange", pointerlockchange, false);
         document.addEventListener("mozpointerlockchange", pointerlockchange, false);
         document.addEventListener("webkitpointerlockchange", pointerlockchange, false);
-    })();
+    }
 
+    window.addEventListener('keyup', (event) => {
+        switch (event.keyCode) {
+            case 78:
+                noclip = !noclip;
+                if (noclip) {
+                    camera.applyGravity = false;
+                    //Then apply collisions and gravity to the active camera
+                    camera.checkCollisions = false;
+                } else {
+                    camera.applyGravity = true;
+                    //Then apply collisions and gravity to the active camera
+                    camera.checkCollisions = true;
+                }
+                break;
+            
+        }
+    });
 }
-
 
 
