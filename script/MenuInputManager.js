@@ -1,6 +1,6 @@
 MenuInputManager = function (game) {
     var sens = DEF_SENS;
-    var targetSize = .75;
+    var targetSize = 1;
     var yaw = 0.022;
     var amount = 25;
     var delay = .5;
@@ -8,10 +8,9 @@ MenuInputManager = function (game) {
     var invertPitch = false;
     var invertYaw = false;
     var resChange = false;
+    var soundEnabled = true;
 
     function save(page) {
-
-        targetSize = $("#myRange").val() + .25;
 
         if ($("#sens").val() > 0 && !isNaN($("#sens").val())) {
             sens = $("#sens").val();
@@ -32,7 +31,7 @@ MenuInputManager = function (game) {
         }
 
         if (!isNaN($("#delay").val()) && $("#delay").val() > 0) {
-           
+
             delay = $("#delay").val();
         } else {
             $("#delay").val(delay);
@@ -44,12 +43,13 @@ MenuInputManager = function (game) {
             $("#duration").val(duration);
         }
 
-        targetSize = parseFloat($("#myRange").val()) + 0.25;
+        targetSize = parseFloat($("#myRange").val()) + 0.2;
 
         invertPitch = $("#invertx").is(':checked');
 
         invertYaw = $("#inverty").is(':checked');
 
+        soundEnabled = $("#sound").is(':checked');
 
     }
 
@@ -61,7 +61,11 @@ MenuInputManager = function (game) {
         $("#yaw").val(yaw);
         $("#invertx").prop("checked", invertPitch);
         $("#inverty").prop("checked", invertYaw);
-        $("#myRange").val(targetSize - .25);
+        $("#sound").prop("checked", soundEnabled);
+        $("#myRange").val(targetSize - .2);
+        $("#targetsize").text(Math.round(targetSize * 10));
+
+
     }
 
     this.setUpMenu = function () {
@@ -95,10 +99,10 @@ MenuInputManager = function (game) {
                 $("#yaw").val($("#gamedd").val());
         });
 
-
         $("#myRange").mouseup(function () {
-            $("#targetsize").text(parseFloat($("#myRange").val()) + 0.25);
+            $("#targetsize").text(Math.round((parseFloat($("#myRange").val()) + 0.2) * 10));
         });
+       
 
     }
 
@@ -114,7 +118,7 @@ MenuInputManager = function (game) {
             game.player.updateSensitivity(game.player.currentSens, yaw);
         }
 
-        if(targetSize != game.world.targetSize){
+        if (targetSize != game.world.targetSize) {
             game.world.updateTargetSize(targetSize);
         }
 
@@ -135,9 +139,13 @@ MenuInputManager = function (game) {
             game.player.updateSensitivity(game.player.currentSens, game.player.currentYaw);
         }
 
-        if (invertYaw != game.player.mouseInvert) {
+        if (invertYaw != game.player.invertYRot) {
             game.player.invertYRot = invertYaw;
             game.player.updateSensitivity(game.player.currentSens, game.player.currentYaw);
+        }
+
+        if (soundEnabled != game.targetManager.targetSoundEnabled) {
+            game.targetManager.targetSoundEnabled = soundEnabled;
         }
 
         var res = $("#dd").val();

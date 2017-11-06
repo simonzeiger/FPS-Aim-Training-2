@@ -31,7 +31,7 @@ Player = function (game) {
         camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 4, -4), scene);
 
         // This targets the camera to scene origin
-        camera.setTarget(BABYLON.Vector3.Zero());
+        camera.setTarget(new BABYLON.Vector3(0, 4, 0));
 
         // This attaches the camera to the canvas
         camera.attachControl(canvas, true);
@@ -50,7 +50,7 @@ Player = function (game) {
         camera._needMoveForGravity = true;
 
         camera.inertia = .75;
-        camera.fov = 1.29154;
+        camera.fov = 1.309;
         updateSens(DEF_SENS, DEF_YAW);
         camera.ellipsoid = new BABYLON.Vector3(1.5, 2, 1.5); 
 
@@ -108,13 +108,13 @@ Player = function (game) {
 
                 if (pickName == "target" && pickResult.pickedMesh.visibility != 0) {
                     game.targetManager.disableTarget();
-                } else if (pickName == "p0" || pickName == "p4" || pickName == "p8" || pickName == "p12") {
+                } else if (pickName == "p4" || pickName == "p8" || pickName == "p12") {
                     camera.position = new BABYLON.Vector3(0, 4, -4);
-                } else if (pickName == "p1" || pickName == "p5" || pickName == "p9" || pickName == "p13") {
+                } else if (pickName == "p1" || pickName == "p9" || pickName == "p13") {
                     camera.position = new BABYLON.Vector3(0, 6, CAMERA_INIT_Z - SIZE * 1.25);
-                } else if (pickName == "p2" || pickName == "p6" || pickName == "p10" || pickName == "p14") {
+                } else if (pickName == "p2" || pickName == "p6" || pickName == "p14") {
                     camera.position = new BABYLON.Vector3(0, 8, CAMERA_INIT_Z - 2 * SIZE * 1.25);
-                } else if (pickName == "p3" || pickName == "p7" || pickName == "p11" || pickName == "p15") {
+                } else if (pickName == "p3" || pickName == "p7" || pickName == "p11") {
                     camera.position = new BABYLON.Vector3(0, 10, CAMERA_INIT_Z - 3 * SIZE * 1.25);
                 } else if (pickName == "st") {
                     game.world.startStop();

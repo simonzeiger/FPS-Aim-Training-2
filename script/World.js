@@ -6,7 +6,7 @@ World = function (game) {
 
     var shadowGenerator;
 
-    var targetSize = 1; //def 1
+    var targetSize = .8; //def 1
 
     var target;
     

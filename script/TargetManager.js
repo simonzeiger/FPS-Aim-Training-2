@@ -29,13 +29,15 @@ TargetManager = function (game) {
 
     var delayTimer = new Timer(this.delay * 1000, scene, startTarget);
 
-    var targetSoundEnabled = true;
+    this.targetSoundEnabled = true;
 
     var targetDing;
 
     var _this = this;
-    if(targetSoundEnabled) targetDing = new BABYLON.Sound("tDing", "assets/ding.wav", scene);
-    
+
+  
+    targetDing = new BABYLON.Sound("tDing", "assets/ding.wav", scene);
+        
 
     this.disableTarget = function () {
         targetsHit++;
@@ -49,7 +51,7 @@ TargetManager = function (game) {
 
         shotTimer.reset();
         shotTimer.start();
-        if(targetSoundEnabled) targetDing.play();
+        if(_this.targetSoundEnabled) targetDing.play();
     }
 
     function moveTarget() {
