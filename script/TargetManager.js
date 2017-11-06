@@ -11,9 +11,9 @@ TargetManager = function (game) {
     //used in world class
     this.start = false;
 
-    var maxTargets = 25;
-    var delay = .5;
-    var tarDuration = .75;
+    this.maxTargets = 25; //def 25
+    this.delay = .5; //def .5
+    this.tarDuration = .75; //def .75
 
     var targetsHit = 0;
     var totalTargets = 0;
@@ -22,16 +22,18 @@ TargetManager = function (game) {
 
     var target = scene.getMeshByName("target");
 
-    var targetDurTimer = new Timer(tarDuration * 1000, scene, moveTarget);
+    var targetDurTimer = new Timer(this.tarDuration * 1000, scene, moveTarget);
 
     //short delay for visual feedback upon shooting target
     var shotTimer = new Timer(100, scene, moveTarget);
 
-    var delayTimer = new Timer(delay * 1000, scene, startTarget);
+    var delayTimer = new Timer(this.delay * 1000, scene, startTarget);
 
-    var targetSoundEnabled = false;
+    var targetSoundEnabled = true;
 
     var targetDing;
+
+    var _this = this;
     if(targetSoundEnabled) targetDing = new BABYLON.Sound("tDing", "assets/ding.wav", scene);
     
 
@@ -61,7 +63,7 @@ TargetManager = function (game) {
         target.visibility = 0;
         target.position = getNextPosition();
 
-        if (totalTargets < maxTargets) {
+        if (totalTargets < _this.maxTargets) {
             delayTimer.reset();
 
             delayTimer.start();
@@ -71,6 +73,15 @@ TargetManager = function (game) {
 
     }
 
+    this.updateDelay = function(tarDelay){
+        this.delay = tarDelay;
+        delayTimer = new Timer(this.delay * 1000, scene, startTarget);
+    }
+
+    this.updateTargetDuration = function(duration){
+        this.tarDuration = duration;
+        targetDurTimer = new Timer(this.tarDuration * 1000, scene, moveTarget);
+    }
     function startTarget() {
 
         targetDurTimer.reset()

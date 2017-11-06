@@ -6,7 +6,9 @@ World = function (game) {
 
     var shadowGenerator;
 
-    var targetSize = 0.75; //def 0.75
+    var targetSize = 1; //def 1
+
+    var target;
     
     //"constructor"
     (function Wolrd() {
@@ -117,6 +119,13 @@ World = function (game) {
         scoreBoard.position = new BABYLON.Vector3(0, 18.375, SIZE);
     }
 
+    this.updateTargetSize = function(size){
+        
+        target.scaling.x = size;
+        target.scaling.y = size;
+        
+    }
+
     function createOther() {
 
         //start/stop
@@ -191,7 +200,7 @@ World = function (game) {
             game.targetManager.start = !game.targetManager.start;
         }
 
-        var target = BABYLON.Mesh.CreateDisc("target", targetSize, 25, scene);
+        target = BABYLON.Mesh.CreateDisc("target", targetSize, 25, scene);
         target.material = new BABYLON.StandardMaterial("textureyo", scene);
         target.material.diffuseColor = new BABYLON.Color3(0, 1, 0);
         target.position = new BABYLON.Vector3(3, 11.25, SIZE - .1);

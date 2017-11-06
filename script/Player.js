@@ -1,10 +1,15 @@
+//used in MenuInputManager
+const DEF_SENS = 4;
 Player = function (game) {
-    const DEF_SENS = 4;
+    
+    this.currentSens = 4;
     const DEF_YAW = 0.022;
+    this.currentYaw = DEF_YAW;
     const DEF_PITCH = 0.022;
+    var currentPitch = DEF_PITCH;
     const DEGREE_RAD_CONV = 57.2958;
-    var invertYRot = false;
-    var invertXRot = false;
+    this.invertYRot = false;
+    this.invertXRot = false;
     const CAMERA_INIT_Z = -2;
 
     var camera;
@@ -12,6 +17,8 @@ Player = function (game) {
     var noclip = false;
     var scene = game.scene;
     var canvas = game.canvas;
+
+    var _this = this;
 
     //"constructor"
     (function Player() {
@@ -52,19 +59,27 @@ Player = function (game) {
 
     }
 
-    function updateSens(sens, yaw) {
+    //used in MenuInputManager
+    this.updateSensitivity = function (sens, yaw) {
+        updateSens(sens, yaw);
+    }
 
-        if (!invertXRot) {
-            camera.angularSensibilityX = DEGREE_RAD_CONV / (DEF_PITCH * sens);
+    function updateSens(sens, yaw){
+        
+        currentPitch = yaw;
+        if (!_this.invertXRot) {
+            camera.angularSensibilityX = DEGREE_RAD_CONV / (currentPitch * sens);
         } else {
-           camera.angularSensibilityX = DEGREE_RAD_CONV / (-DEF_PITCH * sens);
+           camera.angularSensibilityX = DEGREE_RAD_CONV / (-currentPitch * sens);
         }
 
-        if (!invertYRot) {
+        if (!_this.invertYRot) {
             camera.angularSensibilityY = DEGREE_RAD_CONV / (yaw * sens);
         } else {
             camera.angularSensibilityY = DEGREE_RAD_CONV / (-yaw * sens);
         }
+        _this.currentSens = sens;
+        _this.currentYaw = yaw;
     }
 
     function handleMouse() {

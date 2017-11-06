@@ -6,7 +6,9 @@
     <title>CS:GO Aim Practice</title>
     <!-- link to the last version of babylon -->
     <script src="script/babylon.max.js"></script>
-    <link rel="stylesheet" type="text/css" href="style/index.css"/>
+    <script src="script/jquery-3.2.1.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="style/index.css" />
 
 </head>
 
@@ -16,6 +18,7 @@
     <script src="script/World.js"></script>
     <script src="script/TargetManager.js"></script>
     <script src="script/Player.js"></script>
+    <script src="script/MenuInputManager.js"></script>
     <script src="script/Timer.js"></script>
 
     <div id="vertical" class="crosshair">
@@ -28,7 +31,89 @@
         <div id="rectangle4" style="width:33.3%; height:20%; background:black; position: relative; float: right; top: -10%; right: 33.3%"></div>
     </div>
 
+    <div id="big"></div>
+    <div id="form">
+        <div id="firstpage" style="height: inherit;">
+            <p>Target Size:</p>
+            <div id="tarsizecontainer">
+                <input type="range" id="myRange" step=".25" min: ".25" max="1.25" defaultValue="1" style="width: 70%;">
+                <p id="targetsize">1</p>
+            </div>
+            <div class="textinputcontainer">
+                <input id="amount" class="textinput" type="text" title="amount" value="25">
+                <p>Amount:</p>
+            </div>
+            <div class="textinputcontainer">
+                <input id="delay" class="textinput" type="text" title="delay" value=".5">
+                <p>Delay:</p>
+            </div>
+            <div class="textinputcontainer">
+                <input id="duration" class="textinput" type="text" title="duration" value=".75">
+                <p>Tar. Duration:</p>
+            </div>
+
+            <div class="textinputcontainer">
+                    <select title="game" id="gamedd" class="textinput" style="width: 50%;">
+                        <option value="0.022">CS:GO</option>
+                        <option value="0.0066">Overwatch</option>
+                    </select>
+                    <p>Game:</p>
+                </div>
+                <div class="textinputcontainer">
+                    <input id="sens" class="textinput" type="text" title="sens" value="4">
+                    <p>Sensitivity: </p>
+                </div>
+
+
+        </div>
+        <div id="secondpage" style="height: inherit;">
+
+            <div class="textinputcontainer">
+                <input id="yaw" class="textinput" type="text" title="yaw" value="0.022">
+                <p>yaw (advanced):</p>
+            </div>
+
+            <div class="textinputcontainer">
+                <input id="invertx" class="textinput" type="checkbox" title="check" value="false">
+                <p>Invert Pitch:</p>
+            </div>
+
+            <div class="textinputcontainer">
+                <input id="inverty" class="textinput" type="checkbox" title="check" value="false">
+                <p>Invert Yaw:</p>
+            </div>
+
+            <div class="textinputcontainer">
+                <select title="res" id="dd" class="textinput" style="width: 50%;">
+                    <option value="2560 x 1600">2560 x 1600</option>
+                    <option value="2560 x 1440 ">2560 x 1440 </option>
+                    <option value="1920 x 1080" selected="selected">1920 x 1080</option>
+                    <option value="1680 x 1050">1680 x 1050</option>
+                    <option value="1600 x 900">1600 x 900</option>
+                    <option value="1344 x 756">1344 x 756</option>
+                    <option value="1280 x 1024">1280 x 1024</option>
+                    <option value="1280 x 960">1280 x 960</option>
+                    <option value="1280 x 720">1280 x 720</option>
+                    <option value="1024 x 768">1024 x 768</option>
+                    <option value="800 x 600">800 x 600</option>
+                </select>
+                <p>Resolution:</p>
+            </div>
+
+
+
+        </div>
+
+        <div id="buttonContainer" style="width: 50%; position: absolute; left: 41.5%; bottom: 4%;">
+            <button id="apply" value="apply">Apply</button>
+            <button id="next" value="next">Next</button>
+
+        </div>
+
+        <button id="back" value="back" style="position: absolute; left: 9%; bottom: 4%; width: 14%">Back</button>
+
     </div>
+
 
 </body>
 

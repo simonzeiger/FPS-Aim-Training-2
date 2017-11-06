@@ -7,9 +7,9 @@ window.addEventListener('DOMContentLoaded', function () {
 
 Game = function () {
     this.canvas = document.getElementById('renderCanvas');
-    engine = new BABYLON.Engine(this.canvas, true);
-    this.scene = new BABYLON.Scene(engine);
-    _this = this;
+    this.engine = new BABYLON.Engine(this.canvas, true);
+    this.scene = new BABYLON.Scene(this.engine);
+    var _this = this;
     var isFullscreen = false;
 
 
@@ -18,35 +18,55 @@ Game = function () {
     this.scene.debugLayer.show();*/
 
     this.world = new World(this);
-    var player = new Player(this);
+    this.player = new Player(this);
     this.targetManager = new TargetManager(this);
+    var menuInputManager = new MenuInputManager(this);
+    menuInputManager.setUpMenu();
 
-    engine.runRenderLoop(function () {
+    this.engine.runRenderLoop(function () {
         _this.scene.render();
     });
 
     window.addEventListener('resize', function () {
-        if(!isFullscreen) engine.resize();
+        if (!isFullscreen) _this.engine.resize();
     });
 
     window.addEventListener('keyup', (event) => {
         switch (event.keyCode) {
 
             case 70:
-                if(!isFullscreen){
-                    isFullscreen = true;
-                    launchFullScreen();
-                  //  engine.setSize(1280, 1024);                    
+                if (!isFullscreen) {
+
+                    _this.launchFullScreen();
+                    _this.engine.setSize(1920, 1080);    //remove for production?              
                 } else {
-                    isFullscreen = false;
+
                     quitFullscreen();
                 }
                 break;
+            case 77:
+                var form = $("#form");
+                form.toggle();
+
+                $('#big').toggle();
+
+                if (form.is(":visible")) {
+                    document.exitPointerLock = document.exitPointerLock ||
+                        document.mozExitPointerLock ||
+                        document.webkitExitPointerLock;
+
+                    // Attempt to unlock
+                    document.exitPointerLock();
+
+                } else {
+                    menuInputManager.reset();
+                }
         }
 
     });
 
-    function launchFullScreen() {
+    this.launchFullScreen =  function(){
+        isFullscreen = true;
         var element = document.documentElement;
         if (element.requestFullscreen) {
             element.requestFullscreen();
@@ -60,9 +80,10 @@ Game = function () {
     }
 
     function quitFullscreen() {
+        isFullscreen = false;
         var element = document;
-        if (element.exitFullscreen) { 
-            element.exitFullscreen(); 
+        if (element.exitFullscreen) {
+            element.exitFullscreen();
         }
         else if (element.mozCancelFullScreen) {
             element.mozCancelFullScreen();
@@ -71,7 +92,12 @@ Game = function () {
         } else if (element.msExitFullscreen) {
             element.msExitFullscreen();
         }
-    } 
+        _this.engine.resize();
+    }
+
+    
+
+    
 
 }
 
