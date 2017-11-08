@@ -9,6 +9,8 @@ MenuInputManager = function (game) {
     var invertYaw = false;
     var resChange = false;
     var soundEnabled = true;
+    var targetColor = "#00ff00";
+
 
     function save(page) {
 
@@ -51,6 +53,8 @@ MenuInputManager = function (game) {
 
         soundEnabled = $("#sound").is(':checked');
 
+        targetColor = $("#targetcolor").val();
+
     }
 
     this.reset = function () {
@@ -64,7 +68,7 @@ MenuInputManager = function (game) {
         $("#sound").prop("checked", soundEnabled);
         $("#myRange").val(targetSize - .2);
         $("#targetsize").text(Math.round(targetSize * 10));
-
+        $("#targetcolor").val(targetColor);
 
     }
 
@@ -80,6 +84,7 @@ MenuInputManager = function (game) {
         $("#dd").click(function () {
             resChange = true;
         });
+
         $("#next").click(function () {
             $("#firstpage").hide();
             $("#secondpage").show()
@@ -122,6 +127,10 @@ MenuInputManager = function (game) {
             game.world.updateTargetSize(targetSize);
         }
 
+        if(targetColor != game.world.targetColor){
+            game.world.updateTargetColor(targetColor);
+        }
+
         if (amount != game.targetManager.maxTargets) {
             game.targetManager.maxTargets = amount;
         }
@@ -159,8 +168,7 @@ MenuInputManager = function (game) {
             resChange = false;
         }
 
-
-
+    
 
 
         $("#form").toggle();

@@ -37,7 +37,7 @@
             <p>Target Size:</p>
             <div id="tarsizecontainer">
                 <input type="range" id="myRange" step=".1" min: ".2" max="1.6" defaultValue="8" style="width: 70%;">
-                <p id="targetsize">8</p>
+                <p id="targetsize">10</p>
             </div>
             <div class="textinputcontainer">
                 <input id="amount" class="textinput" type="text" title="amount" value="25">
@@ -53,16 +53,16 @@
             </div>
 
             <div class="textinputcontainer">
-                    <select title="game" id="gamedd" class="textinput" style="width: 50%;">
-                        <option value="0.022">CS:GO</option>
-                        <option value="0.0066">Overwatch</option>
-                    </select>
-                    <p>Game:</p>
-                </div>
-                <div class="textinputcontainer">
-                    <input id="sens" class="textinput" type="text" title="sens" value="4">
-                    <p>Sensitivity: </p>
-                </div>
+                <select title="game" id="gamedd" class="textinput" style="width: 50%;">
+                    <option value="0.022">CS:GO</option>
+                    <option value="0.0066">Overwatch</option>
+                </select>
+                <p>Game:</p>
+            </div>
+            <div class="textinputcontainer">
+                <input id="sens" class="textinput" type="text" title="sens" value="4">
+                <p>Sensitivity: </p>
+            </div>
 
 
         </div>
@@ -87,13 +87,13 @@
                 <select title="res" id="dd" class="textinput" style="width: 50%;">
                     <option value="2560 x 1600">2560 x 1600</option>
                     <option value="2560 x 1440 ">2560 x 1440 </option>
-                    <option value="1920 x 1080" selected="selected">1920 x 1080</option>
+                    <option value="1920 x 1080">1920 x 1080</option>
                     <option value="1680 x 1050">1680 x 1050</option>
                     <option value="1600 x 900">1600 x 900</option>
                     <option value="1344 x 756">1344 x 756</option>
                     <option value="1280 x 1024">1280 x 1024</option>
                     <option value="1280 x 960">1280 x 960</option>
-                    <option value="1280 x 720">1280 x 720</option>
+                    <option value="1280 x 720" selected="selected">1280 x 720</option>
                     <option value="1024 x 768">1024 x 768</option>
                     <option value="800 x 600">800 x 600</option>
                 </select>
@@ -101,9 +101,15 @@
             </div>
 
             <div class="textinputcontainer">
-                    <input id="sound" class="textinput" type="checkbox" title="check" value="true" checked>
-                    <p>Sound enabled:</p>
-                </div>
+                <input id="sound" class="textinput" type="checkbox" title="check" value="true" checked>
+                <p>Sound enabled:</p>
+            </div>
+
+
+            <div class="textinputcontainer">
+                <input id="targetcolor" type="color" class="textinput" name="tarcolor" value="#00ff00">
+                <p>Target Color:</p>
+            </div>
 
 
 
@@ -114,6 +120,8 @@
             <button id="next" value="next">Next</button>
 
         </div>
+
+
 
         <button id="back" value="back" style="position: absolute; left: 9%; bottom: 4%; width: 14%">Back</button>
 

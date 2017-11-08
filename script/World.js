@@ -6,9 +6,17 @@ World = function (game) {
 
     var shadowGenerator;
 
-    var targetSize = .8; //def 1
+    const DEF_TAR_SIZE = 1;
+    
+    this.targetSize = DEF_TAR_SIZE;
+
+    const DEF_TAR_COLOR = "#00ff00";
+
+    this.targetColor = DEF_TAR_COLOR;
+    this.targetColor3 = new BABYLON.Color3.FromHexString(DEF_TAR_COLOR);    
 
     var target;
+
     
     //"constructor"
     (function Wolrd() {
@@ -120,9 +128,16 @@ World = function (game) {
     }
 
     this.updateTargetSize = function(size){
+        _this.targetSize = size;
+        target.scaling.x = size/DEF_TAR_SIZE;
+        target.scaling.y = size/DEF_TAR_SIZE;
         
-        target.scaling.x = size;
-        target.scaling.y = size;
+    }
+
+    this.updateTargetColor = function (color){
+        _this.targetColor = color;
+        _this.targetColor3 = new BABYLON.Color3.FromHexString(color); 
+        target.material.diffuseColor = _this.targetColor3; 
         
     }
 
@@ -200,7 +215,7 @@ World = function (game) {
             game.targetManager.start = !game.targetManager.start;
         }
 
-        target = BABYLON.Mesh.CreateDisc("target", targetSize, 25, scene);
+        target = BABYLON.Mesh.CreateDisc("target", DEF_TAR_SIZE, 25, scene);
         target.material = new BABYLON.StandardMaterial("textureyo", scene);
         target.material.diffuseColor = new BABYLON.Color3(0, 1, 0);
         target.position = new BABYLON.Vector3(3, 11.25, SIZE - .1);

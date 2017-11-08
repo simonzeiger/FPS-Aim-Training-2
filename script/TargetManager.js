@@ -87,7 +87,7 @@ TargetManager = function (game) {
     function startTarget() {
 
         targetDurTimer.reset()
-        target.material.diffuseColor = new BABYLON.Color3(0, 1, 0);
+        target.material.diffuseColor = game.world.targetColor3;
         target.visibility = 1;
         targetDurTimer.start();
 

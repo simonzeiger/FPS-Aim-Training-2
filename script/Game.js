@@ -31,7 +31,7 @@ Game = function () {
         if (!isFullscreen) _this.engine.resize();
     });
 
-    window.addEventListener('keyup', (event) => {
+    window.addEventListener('keyup', function (event) {
         switch (event.keyCode) {
 
             case 70:

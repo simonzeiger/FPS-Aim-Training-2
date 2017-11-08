@@ -1,7 +1,6 @@
 //used in MenuInputManager
 const DEF_SENS = 4;
 Player = function (game) {
-    
     this.currentSens = 4;
     const DEF_YAW = 0.022;
     this.currentYaw = DEF_YAW;
@@ -149,7 +148,7 @@ Player = function (game) {
         document.addEventListener("webkitpointerlockchange", pointerlockchange, false);
     }
 
-    window.addEventListener('keyup', (event) => {
+    window.addEventListener('keyup', function(event) {
         switch (event.keyCode) {
             case 78:
                 noclip = !noclip;
