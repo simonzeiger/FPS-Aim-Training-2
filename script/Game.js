@@ -2,6 +2,7 @@
 const SIZE = 15;
 
 window.addEventListener('DOMContentLoaded', function () {
+        
     new Game();
 });
 
@@ -10,7 +11,7 @@ Game = function () {
     this.engine = new BABYLON.Engine(this.canvas, true);
     this.scene = new BABYLON.Scene(this.engine);
     var _this = this;
-    var isFullscreen = false;
+    this.isFullscreen = false;
 
 
     /* Debug layer not working
@@ -28,19 +29,17 @@ Game = function () {
     });
 
     window.addEventListener('resize', function () {
-        if (!isFullscreen) _this.engine.resize();
+        if (!this.isFullscreen) _this.engine.resize();
     });
 
     window.addEventListener('keyup', function (event) {
         switch (event.keyCode) {
-
+            
             case 70:
-                if (!isFullscreen) {
-
+                if (!this.isFullscreen) {
                     _this.launchFullScreen();
                     _this.engine.setSize(1920, 1080);    //remove for production?              
                 } else {
-
                     quitFullscreen();
                 }
                 break;
@@ -61,26 +60,36 @@ Game = function () {
                 } else {
                     menuInputManager.reset();
                 }
+                break;
+            case 27:
+                console.log("esc");
+                this.isFullscreen = false;
+                break;
         }
 
     });
 
     this.launchFullScreen =  function(){
-        isFullscreen = true;
+        
+        this.isFullscreen = true;
         var element = document.documentElement;
         if (element.requestFullscreen) {
+            
             element.requestFullscreen();
         } else if (element.mozRequestFullScreen) {
+            
             element.mozRequestFullScreen();
         } else if (element.webkitRequestFullscreen) {
+            
             element.webkitRequestFullscreen();
         } else if (element.msRequestFullscreen) {
+            
             element.msRequestFullscreen();
         }
     }
 
     function quitFullscreen() {
-        isFullscreen = false;
+        this.isFullscreen = false;
         var element = document;
         if (element.exitFullscreen) {
             element.exitFullscreen();
@@ -94,10 +103,6 @@ Game = function () {
         }
         _this.engine.resize();
     }
-
-    
-
-    
 
 }
 

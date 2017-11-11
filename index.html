@@ -22,16 +22,17 @@
     <script src="script/Timer.js"></script>
 
     <div id="vertical" class="crosshair">
-        <div id="rectangle1" style="width:20%; height:33.3%; background:black; position: relative; top: -66.6%; left:-10%; "></div>
-        <div id="rectangle2" style="width:20%; height:33.3%; background:black; position: relative; top: 0%; left:-10%"></div>
+        <div id="rectangle1" class="crosshairbar" style="width:20%; height:33.3%; top: -66.6%; left:-10%; "></div>
+        <div id="rectangle2" class="crosshairbar" style="width:20%; height:33.3%; top: 0%; left:-10%"></div>
     </div>
 
     <div id="horiontal" class="crosshair">
-        <div id="rectangle3" style="width:33.3%; height:20%; background:black; position: relative; float: left; top: -10%; left: -66.6%"></div>
-        <div id="rectangle4" style="width:33.3%; height:20%; background:black; position: relative; float: right; top: -10%; right: 33.3%"></div>
+        <div id="rectangle3" class="crosshairbar" style="width:33.3%; height:20%; float: left; top: -10%; left: -66.6%"></div>
+        <div id="rectangle4" class="crosshairbar" style="width:33.3%; height:20%; float: right; top: -10%; right: 33.3%"></div>
     </div>
 
     <div id="big"></div>
+
     <div id="form">
         <div id="firstpage" style="height: inherit;">
             <p>Target Size:</p>
@@ -109,6 +110,11 @@
             <div class="textinputcontainer">
                 <input id="targetcolor" type="color" class="textinput" name="tarcolor" value="#00ff00">
                 <p>Target Color:</p>
+            </div>
+
+            <div class="textinputcontainer">
+                <input id="crosshaircolor" type="color" class="textinput" name="tarcolor" value="#000000">
+                <p>Crosshair Color:</p>
             </div>
 
 

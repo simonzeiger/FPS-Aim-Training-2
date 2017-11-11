@@ -51,7 +51,7 @@ Player = function (game) {
         camera.inertia = .75;
         camera.fov = 1.309;
         updateSens(DEF_SENS, DEF_YAW);
-        camera.ellipsoid = new BABYLON.Vector3(1.5, 2, 1.5); 
+        camera.ellipsoid = new BABYLON.Vector3(1.5, 2, 1.5);
 
         // Enable Collisions
         scene.collisionsEnabled = true;
@@ -63,13 +63,14 @@ Player = function (game) {
         updateSens(sens, yaw);
     }
 
-    function updateSens(sens, yaw){
-        
+    function updateSens(sens, yaw) {
+
         currentPitch = yaw;
         if (!_this.invertXRot) {
             camera.angularSensibilityX = DEGREE_RAD_CONV / (currentPitch * sens);
+            console.log(camera.angularSensibilityX);
         } else {
-           camera.angularSensibilityX = DEGREE_RAD_CONV / (-currentPitch * sens);
+            camera.angularSensibilityX = DEGREE_RAD_CONV / (-currentPitch * sens);
         }
 
         if (!_this.invertYRot) {
@@ -101,9 +102,8 @@ Player = function (game) {
             }
 
             var pickResult = scene.pick(scene.getEngine().getRenderWidth() / 2, scene.getEngine().getRenderHeight() / 2);
-            var pickName = pickResult.pickedMesh.name;
             if (pickResult.pickedMesh != null) {
-
+                var pickName = pickResult.pickedMesh.name;
 
                 if (pickName == "target" && pickResult.pickedMesh.visibility != 0) {
                     game.targetManager.disableTarget();
@@ -118,6 +118,7 @@ Player = function (game) {
                 } else if (pickName == "st") {
                     game.world.startStop();
                 }
+
             }
 
         };
@@ -133,6 +134,7 @@ Player = function (game) {
 
             // If the user is already locked
             if (!controlEnabled) {
+                game.isFullScreen = false;
                 camera.detachControl(canvas);
                 isLocked = false;
             } else {
@@ -148,7 +150,7 @@ Player = function (game) {
         document.addEventListener("webkitpointerlockchange", pointerlockchange, false);
     }
 
-    window.addEventListener('keyup', function(event) {
+    window.addEventListener('keyup', function (event) {
         switch (event.keyCode) {
             case 78:
                 noclip = !noclip;
@@ -162,7 +164,7 @@ Player = function (game) {
                     camera.checkCollisions = true;
                 }
                 break;
-            
+
         }
     });
 }
