@@ -2,52 +2,37 @@ MenuInputManager = function (game) {
 
     var _this = this;
 
-    function getValsFromCookie(cookie) {
-
-        if (cookie != null && cookie != "" && cookie != undefined && cookie != "undefined") {
-            console.log("Yee");
-            var obj = JSON.parse(cookie);
-            this.sens = obj.sens;
-            this.targetSize = obj.targetSize;
-            this.yaw = obj.yaw;
-            this.amount = obj.amount;
-            this.delay = obj.delay;
-            this.duration = obj.duration;
-            this.invertPitch = obj.invertPitch;
-            this.invertYaw = obj.invertYaw;
-            this.resChange = obj.resChange;
-            this.soundEnabled = obj.soundEnabled;
-            this.targetColor = obj.targetColor;
-            this.crosshairColor = obj.crosshairColor;
-        } else {
-            this.sens = DEF_SENS;
-            this.targetSize = 1;
-            this.yaw = 0.022;
-            this.amount = 25;
-            this.delay = .5;
-            this.duration = .75;
-            this.invertPitch = false;
-            this.invertYaw = false;
-            this.resChange = false;
-            this.soundEnabled = true;
-            this.targetColor = "#00ff00";
-            this.crosshairColor = "#000000";
-        }
+    function getDefualtVals() {
+        this.sens = DEF_SENS;
+        this.targetSize = 1;
+        this.yaw = 0.022;
+        this.amount = 25;
+        this.delay = .5;
+        this.duration = .75;
+        this.invertPitch = false;
+        this.invertYaw = false;
+        this.resChange = false;
+        this.soundEnabled = true;
+        this.targetColor = "#00ff00";
+        this.crosshairColor = "#000000";
         return this;
     }
 
-    console.log(document.cookie);
-
-    var vals = new getValsFromCookie(document.cookie);
-    save(vals != null && vals != undefined);
-    apply();
+    var vals;
+    if (document.cookie != null && document.cookie != undefined && document.cookie != "" && document.cookie != "undefined") {
+        vals = JSON.parse(document.cookie);
+        save(true);
+        apply();
+    } else {
+        vals = new getDefualtVals();
+    }
 
 
     function save(isFromCookie) {
+
         if ($("#sens").val() > 0 && !isNaN($("#sens").val()) && !isFromCookie) {
             vals.sens = $("#sens").val();
         } else {
-            console.log(vals.sens);
             $("#sens").val(vals.sens);
         }
 
@@ -109,11 +94,15 @@ MenuInputManager = function (game) {
         if (!isFromCookie) {
             vals.crosshairColor = $("#crosshaircolor").val();
         } else {
-            $("#crosshair").val(vals.crosshairColor);
+            $("#crosshaircolor").val(vals.crosshairColor);
         }
 
-        if(isFromCookie){
-            $("#targetsize").text(Math.round(vals.targetSize * 10));            
+        if (isFromCookie) {
+            $("#targetsize").text(Math.round(vals.targetSize * 10));
+        }
+
+        if (isFromCookie) {
+            $("#gamedd").val(vals.yaw);
         }
 
     }
@@ -131,6 +120,8 @@ MenuInputManager = function (game) {
         $("#targetsize").text(Math.round(vals.targetSize * 10));
         $("#targetcolor").val(vals.targetColor);
         $("#crosshair").val(vals.crosshairColor);
+        $("#gamedd").val(vals.yaw);
+
 
     }
 
@@ -177,13 +168,11 @@ MenuInputManager = function (game) {
     function apply() {
 
         if (vals.sens != game.player.currentSens) {
-            console.log("sens");
             game.player.updateSensitivity(vals.sens, game.player.currentYaw);
         }
 
 
         if (vals.yaw != game.player.currentYaw) {
-            console.log("Yaw", vals.yaw);
             game.player.updateSensitivity(game.player.currentSens, vals.yaw);
         }
 
@@ -236,14 +225,9 @@ MenuInputManager = function (game) {
             vals.resChange = false;
         }
 
-
-
-
         $("#form").hide();
 
         $('#big').hide();
-
-        console.log("Apply: ", vals);
 
         document.cookie = JSON.stringify(vals);
 

@@ -1,6 +1,7 @@
 //used in MenuInputManager
 const DEF_SENS = 4;
 Player = function (game) {
+   //mouse movement is wack on carls laptop
     this.currentSens = 4;
     const DEF_YAW = 0.022;
     this.currentYaw = DEF_YAW;
