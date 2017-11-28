@@ -1,5 +1,4 @@
-//used in MenuInputManager
-const DEF_SENS = 4;
+
 Player = function (game) {
    //mouse movement is wack on carls laptop
     this.currentSens = 4;
@@ -69,7 +68,6 @@ Player = function (game) {
         currentPitch = yaw;
         if (!_this.invertXRot) {
             camera.angularSensibilityX = DEGREE_RAD_CONV / (currentPitch * sens);
-            console.log(camera.angularSensibilityX);
         } else {
             camera.angularSensibilityX = DEGREE_RAD_CONV / (-currentPitch * sens);
         }

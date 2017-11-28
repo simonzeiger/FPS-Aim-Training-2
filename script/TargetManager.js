@@ -35,7 +35,10 @@ TargetManager = function (game) {
 
     var _this = this;
 
-  
+    var whiteTarColor = new BABYLON.Color3(2,2,2);
+    var blackTarColor = new BABYLON.Color3(0,0,0);
+    this.isDarkColor = false;
+
     targetDing = new BABYLON.Sound("tDing", "assets/ding.wav", scene);
         
 
@@ -47,7 +50,11 @@ TargetManager = function (game) {
         targetDurTimer.reset();
         delayTimer.reset();
 
-        target.material.diffuseColor = new BABYLON.Color3(0, 0, 0);
+        if(_this.isDarkColor){
+            target.material.diffuseColor = whiteTarColor;
+        } else {
+            target.material.diffuseColor = blackTarColor;
+        }
 
         shotTimer.reset();
         shotTimer.start();

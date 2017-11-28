@@ -1,5 +1,7 @@
 //global varible used in player and world class
 const SIZE = 15;
+//used in MenuInputManager and Player
+const DEF_SENS = 4;
 
 window.addEventListener('DOMContentLoaded', function () {
         
@@ -12,11 +14,6 @@ Game = function () {
     this.scene = new BABYLON.Scene(this.engine);
     var _this = this;
     this.isFullscreen = false;
-
-
-    /* Debug layer not working
-    BABYLON.DebugLayer.InspectorURL = 'http://preview.babylonjs.com/inspector/babylon.inspector.bundle.js';
-    this.scene.debugLayer.show();*/
 
     this.world = new World(this);
     this.player = new Player(this);

@@ -17,7 +17,6 @@ World = function (game) {
 
     var target;
 
-    
     //"constructor"
     (function Wolrd() {
         //set gravity
@@ -138,6 +137,21 @@ World = function (game) {
         _this.targetColor = color;
         _this.targetColor3 = new BABYLON.Color3.FromHexString(color); 
         target.material.diffuseColor = _this.targetColor3; 
+        
+        var rgb = parseInt(color.substring(1), 16);   // convert rrggbb to decimal
+        var r = (rgb >> 16) & 0xff;  // extract red
+        var g = (rgb >>  8) & 0xff;  // extract green
+        var b = (rgb >>  0) & 0xff;  // extract blue
+        
+        var luma = 0.2126 * r + 0.7152 * g + 0.0722 * b; // luma coeefficients
+        
+        if (luma < 33) {
+            console.log("dark");            
+            game.targetManager.isDarkColor = true;
+        } else {
+            console.log("light");
+            game.targetManager.isDarkColor = false;
+        }
         
     }
 

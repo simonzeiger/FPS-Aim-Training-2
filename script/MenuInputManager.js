@@ -21,89 +21,64 @@ MenuInputManager = function (game) {
     var vals;
     if (document.cookie != null && document.cookie != undefined && document.cookie != "" && document.cookie != "undefined") {
         vals = JSON.parse(document.cookie);
-        save(true);
+        reset();
         apply();
     } else {
         vals = new getDefualtVals();
     }
 
 
-    function save(isFromCookie) {
+    function save() {
 
-        if ($("#sens").val() > 0 && !isNaN($("#sens").val()) && !isFromCookie) {
+        if ($("#sens").val() > 0 && !isNaN($("#sens").val())) {
             vals.sens = $("#sens").val();
         } else {
             $("#sens").val(vals.sens);
         }
 
-        if ($("#yaw").val() > 0 && !isNaN($("#yaw").val()) && !isFromCookie) {
+        if ($("#yaw").val() > 0 && !isNaN($("#yaw").val())) {
             vals.yaw = $("#yaw").val();
         } else {
             $("#yaw").val(vals.yaw);
         }
 
-        if (!isNaN($("#amount").val()) && $("#amount").val() > 0 && ($("#amount").val() % 1 === 0) && !isFromCookie) {
+        if (!isNaN($("#amount").val()) && $("#amount").val() > 0 && ($("#amount").val() % 1 === 0)) {
             vals.amount = $("#amount").val();
         } else {
             $("#amount").val(vals.amount);
         }
 
-        if (!isNaN($("#delay").val()) && $("#delay").val() > 0 && !isFromCookie) {
+        if (!isNaN($("#delay").val()) && $("#delay").val() > 0) {
             vals.delay = $("#delay").val();
         } else {
             $("#delay").val(vals.delay);
         }
 
-        if (!isNaN($("#duration").val()) && $("#duration").val() > 0 && !isFromCookie) {
+        if (!isNaN($("#duration").val()) && $("#duration").val() > 0) {
             vals.duration = $("#duration").val();
         } else {
             $("#duration").val(vals.duration);
         }
 
-        if (!isFromCookie) {
-            vals.targetSize = parseFloat($("#myRange").val()) + 0.2;
-        } else {
-            $("#myRange").defaultValue = vals.targetSize - 0.2;
-            $("#myRange").val(vals.targetSize - 0.2);
-        }
+        vals.targetSize = parseFloat($("#myRange").val()) + 0.2;
 
-        if (!isFromCookie) {
-            vals.invertPitch = $("#invertx").is(':checked');
-        } else {
-            $("#invertx").prop("checked", vals.invertPitch);
-        }
 
-        if (!isFromCookie) {
-            invertYaw = $("#inverty").is(':checked');
-        } else {
-            $("#invertx").prop("checked", vals.invertYaw);
-        }
 
-        if (!isFromCookie) {
-            vals.soundEnabled = $("#sound").is(':checked');
-        } else {
-            $("#sound").prop("checked", vals.soundEnabled);
-        }
+        vals.invertPitch = $("#invertx").is(':checked');
 
-        if (!isFromCookie) {
-            vals.targetColor = $("#targetcolor").val();
-        } else {
-            $("#targetcolor").val(vals.targetColor);
-        }
 
-        if (!isFromCookie) {
-            vals.crosshairColor = $("#crosshaircolor").val();
-        } else {
-            $("#crosshaircolor").val(vals.crosshairColor);
-        }
 
-        if (isFromCookie) {
-            $("#targetsize").text(Math.round(vals.targetSize * 10));
-        }
+        invertYaw = $("#inverty").is(':checked');
 
-        if (isFromCookie) {
-            $("#gamedd").val(vals.yaw);
-        }
+
+        vals.soundEnabled = $("#sound").is(':checked');
+
+
+        vals.targetColor = $("#targetcolor").val();
+
+
+
+        vals.crosshairColor = $("#crosshaircolor").val();
 
     }
 
@@ -116,19 +91,20 @@ MenuInputManager = function (game) {
         $("#invertx").prop("checked", vals.invertPitch);
         $("#inverty").prop("checked", vals.invertYaw);
         $("#sound").prop("checked", vals.soundEnabled);
-        $("#myRange").val(vals.targetSize - .2);
+        $("#myRange").defaultValue = vals.targetSize - 0.2;
+        $("#myRange").val(vals.targetSize - 0.2);
         $("#targetsize").text(Math.round(vals.targetSize * 10));
         $("#targetcolor").val(vals.targetColor);
         $("#crosshair").val(vals.crosshairColor);
         $("#gamedd").val(vals.yaw);
-
+        $("#crosshaircolor").val(vals.crosshairColor);
 
     }
 
     this.setUpMenu = function () {
 
         $("#apply").click(function () {
-            save(false);
+            save();
             apply();
         });
         $(":text").click(function () {
