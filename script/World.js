@@ -146,10 +146,8 @@ World = function (game) {
         var luma = 0.2126 * r + 0.7152 * g + 0.0722 * b; // luma coeefficients
         
         if (luma < 33) {
-            console.log("dark");            
             game.targetManager.isDarkColor = true;
         } else {
-            console.log("light");
             game.targetManager.isDarkColor = false;
         }
         

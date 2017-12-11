@@ -82,7 +82,12 @@ MenuInputManager = function (game) {
 
     }
 
-    this.reset = function () {
+    
+    this.reset = function() {
+        reset();
+    }
+
+    function reset() {
         $("#sens").val(vals.sens);
         $("#amount").val(vals.amount);
         $("#delay").val(vals.delay);
@@ -95,10 +100,8 @@ MenuInputManager = function (game) {
         $("#myRange").val(vals.targetSize - 0.2);
         $("#targetsize").text(Math.round(vals.targetSize * 10));
         $("#targetcolor").val(vals.targetColor);
-        $("#crosshair").val(vals.crosshairColor);
+        $("#crosshaircolor").val(vals.crosshairColor);        
         $("#gamedd").val(vals.yaw);
-        $("#crosshaircolor").val(vals.crosshairColor);
-
     }
 
     this.setUpMenu = function () {
@@ -209,7 +212,6 @@ MenuInputManager = function (game) {
 
 
     }
-
 
 
 }

@@ -1,6 +1,6 @@
 
 Player = function (game) {
-   //mouse movement is wack on carls laptop
+    //mouse movement is wack on carls laptop
     this.currentSens = 4;
     const DEF_YAW = 0.022;
     this.currentYaw = DEF_YAW;
@@ -13,6 +13,7 @@ Player = function (game) {
 
     var camera;
     var isJumping = false;
+    const IS_TESTING = true;
     var noclip = false;
     var scene = game.scene;
     var canvas = game.canvas;
@@ -152,17 +153,19 @@ Player = function (game) {
     window.addEventListener('keyup', function (event) {
         switch (event.keyCode) {
             case 78:
-                noclip = !noclip;
-                if (noclip) {
-                    camera.applyGravity = false;
-                    //Then apply collisions and gravity to the active camera
-                    camera.checkCollisions = false;
-                } else {
-                    camera.applyGravity = true;
-                    //Then apply collisions and gravity to the active camera
-                    camera.checkCollisions = true;
+                if (isTesting) {
+                    noclip = !noclip;
+                    if (noclip) {
+                        camera.applyGravity = false;
+                        //Then apply collisions and gravity to the active camera
+                        camera.checkCollisions = false;
+                    } else {
+                        camera.applyGravity = true;
+                        //Then apply collisions and gravity to the active camera
+                        camera.checkCollisions = true;
+                    }
+                    break;
                 }
-                break;
 
         }
     });
