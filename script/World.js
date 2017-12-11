@@ -184,10 +184,9 @@ World = function (game) {
                 panel[i].material.diffuseTexture.hasAlpha = true;
                 panel[i].material.specularColor = new BABYLON.Color3(0, 0, 0);
                 panel[i].material.emissiveColor = new BABYLON.Color3(1, 1, 1);
-                panel[i].material.backFaceCulling = false;
 
                 if (i >= 12) {
-                    panel[i].position = new BABYLON.Vector3(-3 + 2 * (count - 1), 7.25, -SIZE * 3.5 - .3);
+                    panel[i].position = new BABYLON.Vector3(-3 + 2 * (count - 1), 7.3, -SIZE * 3.5 - .5);
                 } else if (i >= 8) {
                     panel[i].position = new BABYLON.Vector3(-3 + 2 * (count - 1), 5.3, -SIZE * 2.25 - .5);
                 } else if (i >= 4) {
@@ -208,7 +207,7 @@ World = function (game) {
             startInstance2.position = new BABYLON.Vector3(5.5, 5.3, -SIZE * 2.25 - .5);
 
             var startInstance3 = start.createInstance("st");
-            startInstance3.position = new BABYLON.Vector3(5.5, 7.25, -SIZE * 3.5 - .3);
+            startInstance3.position = new BABYLON.Vector3(5.5, 7.3, -SIZE * 3.5 - .5);
 
 
         })();

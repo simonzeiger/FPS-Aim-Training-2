@@ -13,12 +13,14 @@ Player = function (game) {
 
     var camera;
     var isJumping = false;
-    const IS_TESTING = true;
     var noclip = false;
     var scene = game.scene;
     var canvas = game.canvas;
 
     var _this = this;
+    
+    const IS_TESTING = true;
+    
 
     //"constructor"
     (function Player() {
@@ -42,14 +44,20 @@ Player = function (game) {
             camera.checkCollisions = true;
         }
 
-        camera.speed = 1;
-        camera.keysUp = [87]; // W
-        camera.keysLeft = [65]; // A
-        camera.keysDown = [83]; // S
-        camera.keysRight = [68]; // D
-        camera._needMoveForGravity = true;
+        if(IS_TESTING){
+            camera.speed = 1;
+            camera.keysUp = [87]; // W
+            camera.keysLeft = [65]; // A
+            camera.keysDown = [83]; // S
+            camera.keysRight = [68]; // D
+            camera._needMoveForGravity = true;
+            camera.inertia = .75;            
+        } else {
+            camera.speed = 0;
+            camera.applyGravity = false;
+            camera.checkCollisions = false;
+        }
 
-        camera.inertia = .75;
         camera.fov = 1.309;
         updateSens(DEF_SENS, DEF_YAW);
         camera.ellipsoid = new BABYLON.Vector3(1.5, 2, 1.5);
@@ -153,7 +161,7 @@ Player = function (game) {
     window.addEventListener('keyup', function (event) {
         switch (event.keyCode) {
             case 78:
-                if (isTesting) {
+                if (IS_TESTING) {
                     noclip = !noclip;
                     if (noclip) {
                         camera.applyGravity = false;
