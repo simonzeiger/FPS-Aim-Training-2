@@ -19,7 +19,7 @@ Player = function (game) {
 
     var _this = this;
     
-    const IS_TESTING = true;
+    const IS_TESTING = false;
     
 
     //"constructor"
