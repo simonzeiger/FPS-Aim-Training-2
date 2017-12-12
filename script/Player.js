@@ -1,6 +1,9 @@
 
 Player = function (game) {
-    //mouse movement is wack on carls laptop
+    //mouse movement is wack on chrome on windows 10
+
+    
+
     this.currentSens = 4;
     const DEF_YAW = 0.022;
     this.currentYaw = DEF_YAW;
@@ -18,15 +21,18 @@ Player = function (game) {
     var canvas = game.canvas;
 
     var _this = this;
-    
+
     const IS_TESTING = false;
-    
+
 
     //"constructor"
     (function Player() {
         createCamera();
         handleMouse();
     })();
+
+  
+    
 
     function createCamera() {
         // Need a free camera for collisions
@@ -44,14 +50,14 @@ Player = function (game) {
             camera.checkCollisions = true;
         }
 
-        if(IS_TESTING){
+        if (IS_TESTING) {
             camera.speed = 1;
             camera.keysUp = [87]; // W
             camera.keysLeft = [65]; // A
             camera.keysDown = [83]; // S
             camera.keysRight = [68]; // D
             camera._needMoveForGravity = true;
-            camera.inertia = .75;            
+            camera.inertia = .75;
         } else {
             camera.speed = 0;
             camera.applyGravity = false;
@@ -136,7 +142,7 @@ Player = function (game) {
 
         // Event listener when the pointerlock is updated (or removed by pressing ESC for example).
         var pointerlockchange = function (event) {
-
+            
             var controlEnabled = document.pointerLockElement || document.mozPointerLockElement
                 || document.webkitPointerLockElement || document.msPointerLockElement || false;
 

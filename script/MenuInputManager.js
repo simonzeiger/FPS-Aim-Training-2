@@ -1,5 +1,5 @@
 MenuInputManager = function (game) {
-
+    //TODO: reset to defualts button
     var _this = this;
 
     function getDefualtVals() {

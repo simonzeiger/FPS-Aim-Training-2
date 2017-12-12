@@ -32528,20 +32528,58 @@ var BABYLON;
                     }
                 };
             }
+            var lastXDir;
+            var lastYDir;
+            const ERRANT_THRESHOLD = 300;
             this._onMouseMove = function (evt) {
                 if (!engine.isPointerLock) {
                     return;
                 }
-                var offsetX = evt.movementX || evt.mozMovementX || evt.webkitMovementX || evt.msMovementX || 0;
-                var offsetY = evt.movementY || evt.mozMovementY || evt.webkitMovementY || evt.msMovementY || 0;
-                if (_this.camera.getScene().useRightHandedSystem) {
-                    _this.camera.cameraRotation.y -= offsetX / _this.angularSensibilityY;
+                var errantMov = false;
+
+                //check if chrome and windows
+                if (!!window.chrome && !!window.chrome.webstore && navigator.platform.indexOf('Win') > -1){
+                    var offsetX = evt.movementX || evt.mozMovementX || evt.webkitMovementX || evt.msMovementX || 0;
+                    var offsetY = evt.movementY || evt.mozMovementY || evt.webkitMovementY || evt.msMovementY || 0;
+                    
+                    var xDir = offsetX > 0 ? 1 : -1;
+                    var yDir = offsetY > 0 ? 1 : -1;
+            
+                    console.log("X: curr: ", offsetX, " ", xDir, "last: ", lastXDir)
+                    console.log("Y: curr: ", offsetY, " ", yDir, "last: ", lastYDir)
+                    
+                    if (lastXDir !== undefined) {
+                        if (Math.abs(offsetX) > ERRANT_THRESHOLD) {
+                            if (xDir !== lastXDir) {
+                                console.log("ERROR");
+                                errantMov = true;
+                            }
+            
+                        }
+                        if (Math.abs(offsetY) > ERRANT_THRESHOLD) {
+                            if (yDir !== lastYDir) {
+                                console.log("ERROR");
+                                errantMov = true;
+                            }
+                        }
+                    }   
+
+                    lastXDir = xDir;                
+                    lastYDir = yDir;
                 }
-                else {
-                    _this.camera.cameraRotation.y += offsetX / _this.angularSensibilityY;
+
+                if(!errantMov){
+                    if (_this.camera.getScene().useRightHandedSystem) {
+                        _this.camera.cameraRotation.y -= offsetX / _this.angularSensibilityY;
+                    }
+                    else {
+                        _this.camera.cameraRotation.y += offsetX / _this.angularSensibilityY;
+                    }
+                    _this.camera.cameraRotation.x += offsetY / _this.angularSensibilityX;
+                    _this.previousPosition = null;
+                } else {
+                    console.log("error averted?");
                 }
-                _this.camera.cameraRotation.x += offsetY / _this.angularSensibilityX;
-                _this.previousPosition = null;
                 if (!noPreventDefault) {
                     evt.preventDefault();
                 }
