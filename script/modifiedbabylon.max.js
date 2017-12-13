@@ -1,3 +1,4 @@
+const IS_WINDOWS_CHROME = !!window.chrome && !!window.chrome.webstore && navigator.userAgent.indexOf('Windows NT 10.0') > -1;
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
 var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -32528,44 +32529,44 @@ var BABYLON;
                     }
                 };
             }
-            var lastXDir;
-            var lastYDir;
-            const ERRANT_THRESHOLD = 300;
+            var lastXD;
+            var lastYD;
+            const ERRANT_THRESHOLD_X = 300;
+            const ERRANT_THRESHOLD_Y = 200;
+            
             this._onMouseMove = function (evt) {
                 if (!engine.isPointerLock) {
                     return;
                 }
                 var errantMov = false;
 
+                var offsetX = evt.movementX || evt.mozMovementX || evt.webkitMovementX || evt.msMovementX || 0;
+                var offsetY = evt.movementY || evt.mozMovementY || evt.webkitMovementY || evt.msMovementY || 0;
+                
+
                 //check if chrome and windows
-                if (!!window.chrome && !!window.chrome.webstore && navigator.platform.indexOf('Win') > -1){
-                    var offsetX = evt.movementX || evt.mozMovementX || evt.webkitMovementX || evt.msMovementX || 0;
-                    var offsetY = evt.movementY || evt.mozMovementY || evt.webkitMovementY || evt.msMovementY || 0;
+                if (IS_WINDOWS_CHROME){
                     
-                    var xDir = offsetX > 0 ? 1 : -1;
-                    var yDir = offsetY > 0 ? 1 : -1;
-            
-                    console.log("X: curr: ", offsetX, " ", xDir, "last: ", lastXDir)
-                    console.log("Y: curr: ", offsetY, " ", yDir, "last: ", lastYDir)
+                   // console.log("X: curr: ", offsetX, " last: ", lastXD);
+                   // console.log("Y: curr: ", offsetY, " last: ", lastYD);
                     
-                    if (lastXDir !== undefined) {
-                        if (Math.abs(offsetX) > ERRANT_THRESHOLD) {
-                            if (xDir !== lastXDir) {
-                                console.log("ERROR");
+                    if (lastXD !== undefined) {
+                        if (Math.abs(offsetX) > ERRANT_THRESHOLD_X) {
+                            if ((offsetX ^ lastXD) < 0) {
+                               // console.log("ERROR");
                                 errantMov = true;
                             }
             
                         }
-                        if (Math.abs(offsetY) > ERRANT_THRESHOLD) {
-                            if (yDir !== lastYDir) {
-                                console.log("ERROR");
+                        if (Math.abs(offsetY) > ERRANT_THRESHOLD_Y) {
+                            if ((offsetY ^ lastYD) < 0) {
+                                //console.log("ERROR");
                                 errantMov = true;
                             }
                         }
                     }   
 
-                    lastXDir = xDir;                
-                    lastYDir = yDir;
+                   
                 }
 
                 if(!errantMov){
@@ -32577,9 +32578,13 @@ var BABYLON;
                     }
                     _this.camera.cameraRotation.x += offsetY / _this.angularSensibilityX;
                     _this.previousPosition = null;
-                } else {
-                    console.log("error averted?");
-                }
+                } //else {
+                 //   console.log("error averted?");
+               // }
+
+               lastXD = offsetX;                
+               lastYD = offsetY;
+
                 if (!noPreventDefault) {
                     evt.preventDefault();
                 }

@@ -1,8 +1,6 @@
 
 Player = function (game) {
-    //mouse movement is wack on chrome on windows 10
-
-    
+    //mouse movement is wack on chrome on windows 10, but temporary hack in place in babylon
 
     this.currentSens = 4;
     const DEF_YAW = 0.022;
