@@ -2,7 +2,7 @@ MenuInputManager = function (game) {
     //TODO: reset to defualts button
     var _this = this;
 
-    function getDefualtVals() {
+    var GetDefualtVals = function () {
         this.sens = DEF_SENS;
         this.targetSize = 1;
         this.yaw = 0.022;
@@ -16,15 +16,15 @@ MenuInputManager = function (game) {
         this.targetColor = "#00ff00";
         this.crosshairColor = "#000000";
         return this;
-    }
+    };
 
     var vals;
-    if (document.cookie != null && document.cookie != undefined && document.cookie != "" && document.cookie != "undefined") {
+    if (document.cookie != null && document.cookie !== undefined && document.cookie !== "" && document.cookie !== "undefined") {
         vals = JSON.parse(document.cookie);
         reset();
         apply();
     } else {
-        vals = new getDefualtVals();
+        vals = new GetDefualtVals();
     }
 
 
@@ -68,7 +68,7 @@ MenuInputManager = function (game) {
 
 
 
-        invertYaw = $("#inverty").is(':checked');
+        vals.invertYaw = $("#inverty").is(':checked');
 
 
         vals.soundEnabled = $("#sound").is(':checked');
@@ -85,7 +85,7 @@ MenuInputManager = function (game) {
     
     this.reset = function() {
         reset();
-    }
+    };
 
     function reset() {
         $("#sens").val(vals.sens);
@@ -120,20 +120,20 @@ MenuInputManager = function (game) {
 
         $("#next").click(function () {
             $("#firstpage").hide();
-            $("#secondpage").show()
+            $("#secondpage").show();
             $("#next").hide();
             $("#back").show();
 
         });
         $("#back").click(function () {
             $("#secondpage").hide();
-            $("#firstpage").show()
+            $("#firstpage").show();
             $("#back").hide();
             $("#next").show();
         });
 
         $("#gamedd").hover(0, function () {
-            if ($("#gamedd").val() != $("#yaw").val())
+            if ($("#gamedd").val() !== $("#yaw").val())
                 $("#yaw").val($("#gamedd").val());
         });
 
@@ -142,54 +142,54 @@ MenuInputManager = function (game) {
         });
 
 
-    }
+    };
 
     function apply() {
 
-        if (vals.sens != game.player.currentSens) {
+        if (vals.sens !== game.player.currentSens) {
             game.player.updateSensitivity(vals.sens, game.player.currentYaw);
         }
 
 
-        if (vals.yaw != game.player.currentYaw) {
+        if (vals.yaw !== game.player.currentYaw) {
             game.player.updateSensitivity(game.player.currentSens, vals.yaw);
         }
 
-        if (vals.targetSize != game.world.targetSize) {
+        if (vals.targetSize !== game.world.targetSize) {
             game.world.updateTargetSize(vals.targetSize);
         }
 
-        if (vals.targetColor != game.world.targetColor) {
+        if (vals.targetColor !== game.world.targetColor) {
             game.world.updateTargetColor(vals.targetColor);
         }
 
-        if (vals.crosshairColor != $(".crosshairbar").css('background')) {
+        if (vals.crosshairColor !== $(".crosshairbar").css('background')) {
             $(".crosshairbar").css('background', vals.crosshairColor);
         }
 
-        if (vals.amount != game.targetManager.maxTargets) {
+        if (vals.amount !== game.targetManager.maxTargets) {
             game.targetManager.maxTargets = vals.amount;
         }
 
-        if (vals.delay != game.targetManager.delay) {
+        if (vals.delay !== game.targetManager.delay) {
             game.targetManager.updateDelay(vals.delay);
         }
 
-        if (vals.duration != game.targetManager.duration) {
+        if (vals.duration !== game.targetManager.duration) {
             game.targetManager.updateTargetDuration(vals.duration);
         }
 
-        if (vals.invertPitch != game.player.invertXRot) {
+        if (vals.invertPitch !== game.player.invertXRot) {
             game.player.invertXRot = vals.invertPitch;
             game.player.updateSensitivity(game.player.currentSens, game.player.currentYaw);
         }
 
-        if (vals.invertYaw != game.player.invertYRot) {
+        if (vals.invertYaw !== game.player.invertYRot) {
             game.player.invertYRot = vals.invertYaw;
             game.player.updateSensitivity(game.player.currentSens, game.player.currentYaw);
         }
 
-        if (vals.soundEnabled != game.targetManager.targetSoundEnabled) {
+        if (vals.soundEnabled !== game.targetManager.targetSoundEnabled) {
             game.targetManager.targetSoundEnabled = vals.soundEnabled;
         }
 
@@ -198,7 +198,7 @@ MenuInputManager = function (game) {
         var width = res.substring(0, res.indexOf("x") - 1);
         var height = res.substring(res.indexOf("x") + 2);
 
-        if (vals.resChange && (height != game.engine.height || width != game.engine.width)) {
+        if (vals.resChange && (height !== game.engine.height || width !== game.engine.width)) {
             game.launchFullScreen();
             game.engine.setSize(width, height);
             vals.resChange = false;
@@ -214,4 +214,4 @@ MenuInputManager = function (game) {
     }
 
 
-}
+};

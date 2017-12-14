@@ -26,14 +26,14 @@ Game = function () {
     });
 
     window.addEventListener('resize', function () {
-        if (!this.isFullscreen) _this.engine.resize();
+        if (!_this.isFullscreen) _this.engine.resize();
     });
 
     window.addEventListener('keyup', function (event) {
         switch (event.keyCode) {
             
             case 70:
-                if (!this.isFullscreen) {
+                if (!_this.isFullscreen) {
                     _this.launchFullScreen();
                     _this.engine.setSize(1920, 1080);    //remove for production?              
                 } else {
@@ -60,7 +60,7 @@ Game = function () {
                 break;
             case 27:
                 console.log("esc");
-                this.isFullscreen = false;
+                _this.isFullscreen = false;
                 break;
         }
 
@@ -68,7 +68,7 @@ Game = function () {
 
     this.launchFullScreen =  function(){
         
-        this.isFullscreen = true;
+        _this.isFullscreen = true;
         var element = document.documentElement;
         if (element.requestFullscreen) {
             
@@ -83,10 +83,10 @@ Game = function () {
             
             element.msRequestFullscreen();
         }
-    }
+    };
 
     function quitFullscreen() {
-        this.isFullscreen = false;
+        _this.isFullscreen = false;
         var element = document;
         if (element.exitFullscreen) {
             element.exitFullscreen();
@@ -101,5 +101,5 @@ Game = function () {
         _this.engine.resize();
     }
 
-}
+};
 

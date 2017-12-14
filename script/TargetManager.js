@@ -59,7 +59,7 @@ TargetManager = function (game) {
         shotTimer.reset();
         shotTimer.start();
         if(_this.targetSoundEnabled) targetDing.play();
-    }
+    };
 
     function moveTarget() {
 
@@ -85,15 +85,15 @@ TargetManager = function (game) {
     this.updateDelay = function(tarDelay){
         this.delay = tarDelay;
         delayTimer = new Timer(this.delay * 1000, scene, startTarget);
-    }
+    };
 
     this.updateTargetDuration = function(duration){
         this.tarDuration = duration;
         targetDurTimer = new Timer(this.tarDuration * 1000, scene, moveTarget);
-    }
+    };
     function startTarget() {
 
-        targetDurTimer.reset()
+        targetDurTimer.reset();
         target.material.diffuseColor = game.world.targetColor3;
         target.visibility = 1;
         targetDurTimer.start();
@@ -132,16 +132,16 @@ TargetManager = function (game) {
         targetsHit = 0;
         target.position = getNextPosition();
         delayTimer.start();
-    }
+    };
 
     this.end = function () {
         targetDurTimer.reset();
         delayTimer.reset();
         shotTimer.reset();
         target.visibility = 0;
-    }
+    };
 
-}
+};
 
 
 

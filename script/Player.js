@@ -3,17 +3,14 @@ Player = function (game) {
     //mouse movement is wack on chrome on windows 10, but temporary hack in place in babylon
 
     this.currentSens = 4;
-    const DEF_YAW = 0.022;
-    this.currentYaw = DEF_YAW;
-    const DEF_PITCH = 0.022;
-    var currentPitch = DEF_PITCH;
+    this.currentYaw = 0.022;
+    var currentPitch = 0.022;
     const DEGREE_RAD_CONV = 57.2958;
     this.invertYRot = false;
     this.invertXRot = false;
     const CAMERA_INIT_Z = -2;
 
     var camera;
-    var isJumping = false;
     var noclip = false;
     var scene = game.scene;
     var canvas = game.canvas;
@@ -63,7 +60,7 @@ Player = function (game) {
         }
 
         camera.fov = 1.309;
-        updateSens(DEF_SENS, DEF_YAW);
+        updateSens(DEF_SENS, 0.022);
         camera.ellipsoid = new BABYLON.Vector3(1.5, 2, 1.5);
 
         // Enable Collisions
@@ -74,7 +71,7 @@ Player = function (game) {
     //used in MenuInputManager
     this.updateSensitivity = function (sens, yaw) {
         updateSens(sens, yaw);
-    }
+    };
 
     function updateSens(sens, yaw) {
 
@@ -99,8 +96,10 @@ Player = function (game) {
         handlePointerLock();
     }
 
+    var isLocked = false;
+
+
     function handlePicking() {
-        var isLocked = false;
 
         // On click event, request pointer lock
         scene.onPointerDown = function (evt) {
@@ -117,17 +116,17 @@ Player = function (game) {
             if (pickResult.pickedMesh != null) {
                 var pickName = pickResult.pickedMesh.name;
 
-                if (pickName == "target" && pickResult.pickedMesh.visibility != 0) {
+                if (pickName === "target" && pickResult.pickedMesh.visibility !== 0) {
                     game.targetManager.disableTarget();
-                } else if (pickName == "p4" || pickName == "p8" || pickName == "p12") {
+                } else if (pickName === "p4" || pickName === "p8" || pickName === "p12") {
                     camera.position = new BABYLON.Vector3(0, 4, -4);
-                } else if (pickName == "p1" || pickName == "p9" || pickName == "p13") {
+                } else if (pickName === "p1" || pickName === "p9" || pickName === "p13") {
                     camera.position = new BABYLON.Vector3(0, 6, CAMERA_INIT_Z - SIZE * 1.25);
-                } else if (pickName == "p2" || pickName == "p6" || pickName == "p14") {
+                } else if (pickName === "p2" || pickName === "p6" || pickName === "p14") {
                     camera.position = new BABYLON.Vector3(0, 8, CAMERA_INIT_Z - 2 * SIZE * 1.25);
-                } else if (pickName == "p3" || pickName == "p7" || pickName == "p11") {
+                } else if (pickName === "p3" || pickName === "p7" || pickName === "p11") {
                     camera.position = new BABYLON.Vector3(0, 10, CAMERA_INIT_Z - 3 * SIZE * 1.25);
-                } else if (pickName == "st") {
+                } else if (pickName === "st") {
                     game.world.startStop();
                 }
 
@@ -181,6 +180,6 @@ Player = function (game) {
 
         }
     });
-}
+};
 
 
