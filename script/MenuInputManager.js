@@ -1,8 +1,20 @@
 MenuInputManager = function (game) {
     //TODO: reset to defualts button
     var _this = this;
+    var sensSlct = $("#sens");
+    var tarSizeSlct = 1;
+    var yawSlct = $("#yaw");
+    var amountSlct = $("#amount");
+    var delaySlct = $("#delay");
+    var durationSlct = $("#duration");
+    var rangeSlct = $("#myRange");
+    var invertPitchSlct = $("#invertx");
+    var invertYawSlct = $("#inverty");
+    var soundEnabledSlct = $("#sound");
+    var targetColorSlct = $("#targetcolor");
+    var crosshairColorSlct = $("#crosshaircolor");
 
-    var GetDefualtVals = function () {
+    var DefualtVals = function () {
         this.sens = DEF_SENS;
         this.targetSize = 1;
         this.yaw = 0.022;
@@ -24,61 +36,61 @@ MenuInputManager = function (game) {
         reset();
         apply();
     } else {
-        vals = new GetDefualtVals();
+        vals = new DefualtVals();
     }
 
 
     function save() {
 
-        if ($("#sens").val() > 0 && !isNaN($("#sens").val())) {
-            vals.sens = $("#sens").val();
+        if (sensSlct.val() > 0 && !isNaN(sensSlct.val())) {
+            vals.sens = sensSlct.val();
         } else {
-            $("#sens").val(vals.sens);
+            sensSlct.val(vals.sens);
         }
 
-        if ($("#yaw").val() > 0 && !isNaN($("#yaw").val())) {
-            vals.yaw = $("#yaw").val();
+        if (yawSlct.val() > 0 && !isNaN(yawSlct.val())) {
+            vals.yaw = yawSlct.val();
         } else {
-            $("#yaw").val(vals.yaw);
+            yawSlct.val(vals.yaw);
         }
 
-        if (!isNaN($("#amount").val()) && $("#amount").val() > 0 && ($("#amount").val() % 1 === 0)) {
-            vals.amount = $("#amount").val();
+        if (!isNaN(amountSlct.val()) && amountSlct.val() > 0 && (amountSlct.val() % 1 === 0)) {
+            vals.amount = amountSlct.val();
         } else {
-            $("#amount").val(vals.amount);
+            amountSlct.val(vals.amount);
         }
 
-        if (!isNaN($("#delay").val()) && $("#delay").val() > 0) {
-            vals.delay = $("#delay").val();
+        if (!isNaN(delaySlct.val()) && delaySlct.val() > 0) {
+            vals.delay = delaySlct.val();
         } else {
-            $("#delay").val(vals.delay);
+            delaySlct.val(vals.delay);
         }
 
-        if (!isNaN($("#duration").val()) && $("#duration").val() > 0) {
-            vals.duration = $("#duration").val();
+        if (!isNaN(durationSlct.val()) && durationSlct.val() > 0) {
+            vals.duration = durationSlct.val();
         } else {
-            $("#duration").val(vals.duration);
+            durationSlct.val(vals.duration);
         }
 
-        vals.targetSize = parseFloat($("#myRange").val()) + 0.2;
+        vals.targetSize = parseFloat(rangeSlct.val()) + 0.2;
 
 
 
-        vals.invertPitch = $("#invertx").is(':checked');
+        vals.invertPitch = invertPitchSlct.is(':checked');
 
 
 
-        vals.invertYaw = $("#inverty").is(':checked');
+        vals.invertYaw = invertYawSlct.is(':checked');
 
 
-        vals.soundEnabled = $("#sound").is(':checked');
+        vals.soundEnabled = soundEnabledSlct.is(':checked');
 
 
-        vals.targetColor = $("#targetcolor").val();
+        vals.targetColor = targetColorSlct.val();
 
 
 
-        vals.crosshairColor = $("#crosshaircolor").val();
+        vals.crosshairColor = crosshairColorSlct.val();
 
     }
 
@@ -88,19 +100,19 @@ MenuInputManager = function (game) {
     };
 
     function reset() {
-        $("#sens").val(vals.sens);
-        $("#amount").val(vals.amount);
-        $("#delay").val(vals.delay);
-        $("#duration").val(vals.duration);
-        $("#yaw").val(vals.yaw);
-        $("#invertx").prop("checked", vals.invertPitch);
-        $("#inverty").prop("checked", vals.invertYaw);
-        $("#sound").prop("checked", vals.soundEnabled);
-        $("#myRange").defaultValue = vals.targetSize - 0.2;
-        $("#myRange").val(vals.targetSize - 0.2);
+        sensSlct.val(vals.sens);
+        amountSlct.val(vals.amount);
+        delaySlct.val(vals.delay);
+        durationSlct.val(vals.duration);
+        yawSlct.val(vals.yaw);
+        invertPitchSlct.prop("checked", vals.invertPitch);
+        invertYawSlct.prop("checked", vals.invertYaw);
+        soundEnabledSlct.prop("checked", vals.soundEnabled);
+        rangeSlct.defaultValue = vals.targetSize - 0.2;
+        rangeSlct.val(vals.targetSize - 0.2);
         $("#targetsize").text(Math.round(vals.targetSize * 10));
-        $("#targetcolor").val(vals.targetColor);
-        $("#crosshaircolor").val(vals.crosshairColor);        
+        targetColorSlct.val(vals.targetColor);
+        crosshairColorSlct.val(vals.crosshairColor);
         $("#gamedd").val(vals.yaw);
     }
 
@@ -132,13 +144,14 @@ MenuInputManager = function (game) {
             $("#next").show();
         });
 
-        $("#gamedd").hover(0, function () {
-            if ($("#gamedd").val() !== $("#yaw").val())
-                $("#yaw").val($("#gamedd").val());
+        var gameDDSlct = $("#gamedd");
+        gameDDSlct.hover(0, function () {
+            if (gameDDSlct.val() !== yawSlct.val())
+                yawSlct.val(gameDDSlct.val());
         });
 
-        $("#myRange").mouseup(function () {
-            $("#targetsize").text(Math.round((parseFloat($("#myRange").val()) + 0.2) * 10));
+        rangeSlct.mouseup(function () {
+            $("#targetsize").text(Math.round((parseFloat(rangeSlct.val()) + 0.2) * 10));
         });
 
 
@@ -163,6 +176,7 @@ MenuInputManager = function (game) {
             game.world.updateTargetColor(vals.targetColor);
         }
 
+        // noinspection JSJQueryEfficiency
         if (vals.crosshairColor !== $(".crosshairbar").css('background')) {
             $(".crosshairbar").css('background', vals.crosshairColor);
         }
@@ -204,7 +218,7 @@ MenuInputManager = function (game) {
             vals.resChange = false;
         }
 
-        $("#form").hide();
+        $('#form').hide();
 
         $('#big').hide();
 
