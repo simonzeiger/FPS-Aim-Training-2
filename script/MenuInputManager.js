@@ -12,8 +12,10 @@ MenuInputManager = function (game) {
     var soundEnabledSlct = $("#sound");
     var targetColorSlct = $("#targetcolor");
     var crosshairColorSlct = $("#crosshaircolor");
+    var gameDDSlct = $("#gamedd");
 
-    function DefualtVals () {
+
+    function DefaultVals () {
         this.sens = DEF_SENS;
         this.targetSize = 1;
         this.yaw = 0.022;
@@ -35,7 +37,7 @@ MenuInputManager = function (game) {
         reset();
         apply();
     } else {
-        vals = new DefualtVals();
+        vals = new DefaultVals();
     }
 
 
@@ -112,7 +114,7 @@ MenuInputManager = function (game) {
         $("#targetsize").text(Math.round(vals.targetSize * 10));
         targetColorSlct.val(vals.targetColor);
         crosshairColorSlct.val(vals.crosshairColor);
-        $("#gamedd").val(vals.yaw);
+        gameDDSlct.val(vals.yaw);
     }
 
     this.setUpMenu = function () {
@@ -130,20 +132,30 @@ MenuInputManager = function (game) {
         });
 
         $("#next").click(function () {
-            $("#firstpage").hide();
-            $("#secondpage").show();
-            $("#next").hide();
+            if ( $("#firstpage").is(":visible")) {
+                $("#firstpage").hide();
+                $("#secondpage").show();
+            } else {
+                $("#thirdpage").show();
+                $("#secondpage").hide();
+                $("#next").hide();
+            }
             $("#back").show();
 
         });
         $("#back").click(function () {
-            $("#secondpage").hide();
-            $("#firstpage").show();
-            $("#back").hide();
+            if ( $("#secondpage").is(":visible")) {
+                $("#secondpage").hide();
+                $("#firstpage").show();
+                $("#back").hide();
+            } else {
+                $("#thirdpage").hide();
+                $("#secondpage").show();
+                $("#back").show();
+            }
             $("#next").show();
         });
 
-        var gameDDSlct = $("#gamedd");
         gameDDSlct.hover(0, function () {
             if (gameDDSlct.val() !== yawSlct.val())
                 yawSlct.val(gameDDSlct.val());
@@ -151,6 +163,12 @@ MenuInputManager = function (game) {
 
         rangeSlct.mouseup(function () {
             $("#targetsize").text(Math.round((parseFloat(rangeSlct.val()) + 0.2) * 10));
+        });
+
+        $("#reset").click(function(){
+            vals = new DefaultVals();
+            reset();
+            console.log("reset pressed");
         });
 
 

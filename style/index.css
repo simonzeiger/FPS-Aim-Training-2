@@ -73,6 +73,10 @@ button {
     display: none;
 }
 
+#thirdpage{
+    display: none;
+}
+
 #tarsizecontainer{
     position:relative; 
     text-align:right; 
