@@ -1,8 +1,8 @@
 
 Player = function (game) {
-    //mouse movement is wack on chrome on windows 10, but temporary hack in place in babylon
+    //mouse movement is wack on chrome on windows 10, but temporary hack in place in babylon.max
 
-    this.currentSens = 4;
+    this.currentSens = DEF_SENS;
     this.currentYaw = 0.022;
     var currentPitch = 0.022;
     const DEGREE_RAD_CONV = 57.2958;

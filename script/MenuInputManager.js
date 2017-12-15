@@ -1,8 +1,7 @@
 MenuInputManager = function (game) {
-    //TODO: reset to defualts button
+    //TODO: implement reset to defualts button
     var _this = this;
     var sensSlct = $("#sens");
-    var tarSizeSlct = 1;
     var yawSlct = $("#yaw");
     var amountSlct = $("#amount");
     var delaySlct = $("#delay");
@@ -14,7 +13,7 @@ MenuInputManager = function (game) {
     var targetColorSlct = $("#targetcolor");
     var crosshairColorSlct = $("#crosshaircolor");
 
-    var DefualtVals = function () {
+    function DefualtVals () {
         this.sens = DEF_SENS;
         this.targetSize = 1;
         this.yaw = 0.022;
@@ -28,7 +27,7 @@ MenuInputManager = function (game) {
         this.targetColor = "#00ff00";
         this.crosshairColor = "#000000";
         return this;
-    };
+    }
 
     var vals;
     if (document.cookie != null && document.cookie !== undefined && document.cookie !== "" && document.cookie !== "undefined") {

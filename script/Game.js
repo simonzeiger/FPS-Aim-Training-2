@@ -13,7 +13,6 @@ Game = function () {
     this.engine = new BABYLON.Engine(this.canvas, true);
     this.scene = new BABYLON.Scene(this.engine);
     var _this = this;
-    this.isFullscreen = false;
 
     this.world = new World(this);
     this.player = new Player(this);
@@ -26,16 +25,16 @@ Game = function () {
     });
 
     window.addEventListener('resize', function () {
-        if (!_this.isFullscreen) _this.engine.resize();
+        if (!_this.engine.isFullscreen) _this.engine.resize();
     });
 
     window.addEventListener('keyup', function (event) {
         switch (event.keyCode) {
             
             case 70:
-                if (!_this.isFullscreen) {
+                if (!_this.engine.isFullscreen) {
                     _this.launchFullScreen();
-                    _this.engine.setSize(1920, 1080);    //remove for production?              
+                    //_this.engine.setSize(1920, 1080);    //remove for production?              
                 } else {
                     quitFullscreen();
                 }
@@ -58,17 +57,13 @@ Game = function () {
                     menuInputManager.reset();
                 }
                 break;
-            case 27:
-                console.log("esc");
-                _this.isFullscreen = false;
-                break;
+           
         }
 
     });
 
     this.launchFullScreen =  function(){
         
-        _this.isFullscreen = true;
         var element = document.documentElement;
         if (element.requestFullscreen) {
             
@@ -86,7 +81,6 @@ Game = function () {
     };
 
     function quitFullscreen() {
-        _this.isFullscreen = false;
         var element = document;
         if (element.exitFullscreen) {
             element.exitFullscreen();

@@ -1,4 +1,3 @@
-const IS_WINDOWS_CHROME = !!window.chrome && !!window.chrome.webstore && navigator.userAgent.indexOf('Windows NT 10.0') > -1;
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
 var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
 if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -32469,6 +32468,7 @@ var BABYLON;
         FreeCameraMouseInput.prototype.attachControl = function (element, noPreventDefault) {
             var _this = this;
             var engine = this.camera.getEngine();
+            const IS_WINDOWS_CHROME = !!window.chrome && !!window.chrome.webstore && navigator.userAgent.indexOf('Windows NT 10.0') > -1;
             if (!this._pointerInput) {
                 this._pointerInput = function (p, s) {
                     var evt = p.event;
