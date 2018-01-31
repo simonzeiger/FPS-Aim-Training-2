@@ -32529,16 +32529,13 @@ var BABYLON;
                     }
                 };
             }
-            var lastXD;
-            var lastYD;
-            const ERRANT_THRESHOLD_X = 300;
-            const ERRANT_THRESHOLD_Y = 200;
+           
             
             this._onMouseMove = function (evt) {
                 if (!engine.isPointerLock) {
                     return;
                 }
-                var errantMov = false;
+             
 
                 var offsetX = evt.movementX || evt.mozMovementX || evt.webkitMovementX || evt.msMovementX || 0;
                 var offsetY = evt.movementY || evt.mozMovementY || evt.webkitMovementY || evt.msMovementY || 0;
@@ -32550,41 +32547,22 @@ var BABYLON;
                    // console.log("X: curr: ", offsetX, " last: ", lastXD);
                    // console.log("Y: curr: ", offsetY, " last: ", lastYD);
                     
-                    if (lastXD !== undefined) {
-                        if (Math.abs(offsetX) > ERRANT_THRESHOLD_X) {
-                            if ((offsetX ^ lastXD) < 0) {
-                               // console.log("ERROR");
-                                errantMov = true;
-                            }
-            
-                        }
-                        if (Math.abs(offsetY) > ERRANT_THRESHOLD_Y) {
-                            if ((offsetY ^ lastYD) < 0) {
-                                //console.log("ERROR");
-                                errantMov = true;
-                            }
-                        }
-                    }   
-
+                    
                    
                 }
 
-                if(!errantMov){
-                    if (_this.camera.getScene().useRightHandedSystem) {
-                        _this.camera.cameraRotation.y -= offsetX / _this.angularSensibilityY;
-                    }
-                    else {
-                        _this.camera.cameraRotation.y += offsetX / _this.angularSensibilityY;
-                    }
-                    _this.camera.cameraRotation.x += offsetY / _this.angularSensibilityX;
-                    _this.previousPosition = null;
-                } //else {
-                 //   console.log("error averted?");
-               // }
+               
+                if (_this.camera.getScene().useRightHandedSystem) {
+                    _this.camera.cameraRotation.y -= offsetX / _this.angularSensibilityY;
+                }
+                else {
+                    _this.camera.cameraRotation.y += offsetX / _this.angularSensibilityY;
+                }
+                _this.camera.cameraRotation.x += offsetY / _this.angularSensibilityX;
+                _this.previousPosition = null;
+               
 
-               lastXD = offsetX;                
-               lastYD = offsetY;
-
+               
                 if (!noPreventDefault) {
                     evt.preventDefault();
                 }
